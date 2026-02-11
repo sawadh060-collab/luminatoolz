@@ -20,7 +20,7 @@ if (fs.existsSync(envPath)) {
 }
 
 const dir = __dirname;
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Initialize Supabase
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
@@ -609,3 +609,4 @@ setInterval(async () => {
             .lt('reserved_at', now - 15 * 60 * 1000);
     } catch (e) { }
 }, 60000);
+
