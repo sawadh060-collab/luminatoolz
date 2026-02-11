@@ -1,0 +1,6 @@
+# Static Site Gitignore
+.DS_Store
+node_modules/
+dist/
+*.log
+.env*

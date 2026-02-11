@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economic Calendar | Lumina Sidekick</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --tv-bg: #050505;
+            --sur-bg: #0d0d0d;
+            --accent: #3b82f6;
+        }
+
+        html,
+        body {
+            background-color: #050505 !important;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dancing-script {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .glass {
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-gradient {
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-[#050505]">
+    <!-- Fixed Background Gradient -->
+    <div class="fixed inset-0 hero-gradient -z-10 pointer-events-none"></div>
+
+    <!-- Navigation -->
+    <div class="fixed top-6 left-0 w-full z-50 flex justify-center px-6">
+        <nav class="glass px-8 py-3 rounded-full flex items-center gap-12 border border-white/10 shadow-2xl">
+            <div class="flex items-center gap-2 pr-6 border-r border-white/10">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-2.5 h-2.5 rounded-full bg-blue-500"></div>
+                    <span class="dancing-script text-xl text-white">Lumina</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-8 text-sm font-bold text-gray-400">
+                <a href="index.html#calc" class="hover:text-white transition-colors">Position Sizing</a>
+                <a href="calendar.html" class="text-white transition-colors border-b-2 border-blue-500 pb-1">Economic
+                    Calendar</a>
+                <a href="partners.html" class="hover:text-white transition-colors">Partner</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="min-h-screen pt-32 px-6 flex items-center justify-center">
+        <div class="max-w-7xl w-full grid lg:grid-cols-2 gap-16 items-center">
+
+            <!-- Educational Content -->
+            <div class="space-y-10 text-left order-2 lg:order-1">
+                <div class="space-y-4">
+                    <h1 class="text-sm font-bold text-blue-500 uppercase tracking-[0.4em]">Economic Intelligence</h1>
+                    <h2 class="text-5xl lg:text-7xl font-black text-white italic tracking-tighter leading-none">
+                        KNOW THE NEWS,<br>
+                        <span class="text-gray-500">RESPECT THE TREND.</span>
+                    </h2>
+                </div>
+
+                <div class="space-y-6">
+                    <p class="text-xl text-gray-400 leading-relaxed font-medium">
+                        Lumina doesn't just show news; it contextualizes impact. Most traders lose because they're
+                        caught off-guard by high-volatility events.
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+                            <i data-lucide="zap" class="w-6 h-6 text-blue-500"></i>
+                            <div>
+                                <h4 class="font-bold text-white uppercase text-xs tracking-widest mb-1">Impact Awareness
+                                </h4>
+                                <p class="text-xs text-gray-500">Filter out the noise and focus only on the events that
+                                    move your current pairs.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+                            <i data-lucide="eye" class="w-6 h-6 text-emerald-500"></i>
+                            <div>
+                                <h4 class="font-bold text-white uppercase text-xs tracking-widest mb-1">Live Outcomes
+                                </h4>
+                                <p class="text-xs text-gray-500">Real-time Actual vs Forecast data delivered instantly
+                                    to your TradingView tab.</p>
+                            </div>
+                        </div>
+
+                        <!-- Impact Legend -->
+                        <div class="pt-4 mt-4 border-t border-white/5 space-y-3">
+                            <h4 class="text-[10px] font-black text-gray-600 uppercase tracking-[0.2em]">Impact Legend
+                            </h4>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-1.5 h-3 bg-red-500 rounded-full"></div>
+                                    <span class="text-[9px] font-bold text-gray-500 uppercase">High</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-1.5 h-3 bg-amber-500 rounded-full"></div>
+                                    <span class="text-[9px] font-bold text-gray-500 uppercase">Medium</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-1.5 h-3 bg-white/20 rounded-full"></div>
+                                    <span class="text-[9px] font-bold text-gray-500 uppercase">Low</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Widget Showcase -->
+            <div class="order-1 lg:order-2">
+                <div class="relative max-w-[420px] mx-auto">
+                    <!-- Data Source Attribution -->
+                    <div class="absolute -bottom-16 left-0 right-0 text-center">
+                        <p class="text-[10px] text-gray-600 flex items-center justify-center gap-1.5">
+                            <i data-lucide="database" class="w-3 h-3"></i>
+                            Economic data powered by
+                            <a href="https://www.investing.com/economic-calendar/" target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-blue-500 hover:text-blue-400 transition-colors font-semibold underline underline-offset-2">
+                                Investing.com
+                            </a>
+                        </p>
+                    </div>
+                    <!-- Glow -->
+                    <div class="absolute -inset-4 bg-blue-500/10 blur-3xl rounded-full opacity-50"></div>
+
+                    <!-- The Widget -->
+                    <div
+                        class="relative w-[380px] h-[310px] bg-[#0C0C0C] rounded-[30px] border border-white/[0.08] flex flex-col overflow-hidden shadow-2xl select-none mx-auto">
+
+                        <!-- Header -->
+                        <div class="h-14 flex items-center justify-between px-6 shrink-0 border-b border-white/[0.02]">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]">
+                                </div>
+                                <h1 class="text-[22px] font-bold text-white tracking-wide dancing-script">Lumina</h1>
+                            </div>
+                            <button class="text-gray-600">
+                                <i data-lucide="menu" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="flex-1 px-6 pt-4 space-y-4">
+                            <!-- Instrument Row -->
+                            <div class="space-y-1">
+                                <label
+                                    class="text-[8px] font-bold text-gray-700 uppercase tracking-widest pl-0.5">Instrument</label>
+                                <div
+                                    class="bg-[#181818] border border-white/[0.04] rounded-lg h-[36px] px-3 flex items-center gap-2.5">
+                                    <div class="flex items-center relative h-5 w-9">
+                                        <div
+                                            class="absolute left-0 z-10 w-4 h-4 rounded-full border border-[#121212] overflow-hidden">
+                                            <img src="https://flagcdn.com/w40/eu.png"
+                                                class="w-full h-full object-cover" />
+                                        </div>
+                                        <div
+                                            class="absolute left-3 z-0 w-4 h-4 rounded-full border border-[#121212] overflow-hidden">
+                                            <img src="https://flagcdn.com/w40/us.png"
+                                                class="w-full h-full object-cover" />
+                                        </div>
+                                    </div>
+                                    <span class="text-[12px] font-bold text-white tracking-tight">EURUSD</span>
+                                </div>
+                            </div>
+
+                            <!-- News List -->
+                            <div class="space-y-2">
+                                <div class="flex text-[8px] font-bold text-gray-700 uppercase tracking-widest px-2">
+                                    <div class="w-14">Time</div>
+                                    <div class="flex-1 text-center pr-10">Event</div>
+                                    <div class="w-12 text-center">Act</div>
+                                    <div class="w-10 text-center">For</div>
+                                    <div class="w-10 text-center">Prev</div>
+                                </div>
+
+                                <div
+                                    class="bg-[#181818] border border-white/[0.04] rounded-xl overflow-hidden divide-y divide-white/[0.02]">
+                                    <!-- Event 1 -->
+                                    <div class="flex items-center px-2 py-2 relative">
+                                        <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-amber-500"></div>
+                                        <div class="w-14 text-[10px] font-bold text-gray-500">17:45</div>
+                                        <div class="flex-1 text-[10px] font-black text-gray-200 uppercase leading-none">
+                                            Chicago<br>PMI</div>
+                                        <div class="w-12 text-[10px] font-bold text-red-500 text-center pr-2">44.0
+                                        </div>
+                                        <div class="w-10 text-[10px] font-bold text-gray-600 text-center">46.2</div>
+                                        <div class="w-10 text-[10px] font-bold text-gray-600 text-center">45.0</div>
+                                    </div>
+                                    <!-- Event 2 -->
+                                    <div class="flex items-center px-2 py-2 relative">
+                                        <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-white/20"></div>
+                                        <div class="w-14 text-[10px] font-bold text-gray-500">19:00</div>
+                                        <div class="flex-1 text-[10px] font-black text-gray-200 uppercase leading-none">
+                                            CONSUMER<br>CONFIDENCE</div>
+                                        <div class="w-12 text-[10px] font-bold text-white text-center pr-2">-15</div>
+                                        <div class="w-10 text-[10px] font-bold text-gray-600 text-center">-15</div>
+                                        <div class="w-10 text-[10px] font-bold text-gray-600 text-center">-17</div>
+                                    </div>
+                                    <!-- Event 3 -->
+                                    <div class="flex items-center px-2 py-2 relative">
+                                        <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-red-500"></div>
+                                        <div class="w-14 text-[10px] font-bold text-gray-500">13:00</div>
+                                        <div class="flex-1 text-[10px] font-black text-gray-200 uppercase leading-none">
+                                            ECB<br>President</div>
+                                        <div class="w-12 text-[10px] font-bold text-gray-500 text-center pr-2">---
+                                        </div>
+                                        <div class="w-10 text-[10px] font-bold text-gray-500 text-center">---</div>
+                                        <div class="w-10 text-[10px] font-bold text-gray-500 text-center">---</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Decoration -->
+                        <div class="mt-auto p-4 flex justify-center opacity-30">
+                            <div class="h-1.5 w-14 bg-gray-800 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

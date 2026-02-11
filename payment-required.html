@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Access Required | Lumina</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 3rem;
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 400px;
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+
+        .paypal-btn {
+            background: #0070ba;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .paypal-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Premium Access</h1>
+        <p>A small payment of $5.00 is required to access the Survey page. Access is tied to your unique anonymous ID.
+        </p>
+
+        <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID"></script>
+        <div id="paypal-button-container"></div>
+
+        <script>
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+            }
+
+            paypal.Buttons({
+                createOrder: function (data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: { value: '5.00' },
+                            custom_id: getCookie('userId') // CRITICAL: Link the payment to the session cookie
+                        }]
+                    });
+                },
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (details) {
+                        alert('Payment successful! Access will be granted shortly via webhook.');
+                        window.location.href = '/survey.html';
+                    });
+                }
+            }).render('#paypal-button-container');
+        </script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | Lumina</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --tv-bg: #050505;
+            --sur-bg: #0d0d0d;
+            --bullish: #10b981;
+            --bearish: #ef4444;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+        }
+
+        html,
+        body {
+            background-color: #050505 !important;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dancing-script {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .glass {
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-gradient {
+            background-image: radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-[#050505]">
+    <div class="fixed inset-0 hero-gradient -z-10 pointer-events-none"></div>
+
+    <!-- Navigation -->
+    <div class="fixed top-6 left-0 w-full z-50 flex justify-center px-6">
+        <nav class="glass px-8 py-3 rounded-full flex items-center gap-12 border border-white/10 shadow-2xl">
+            <div class="flex items-center gap-2 pr-6 border-r border-white/10">
+                <div class="w-2.5 h-2.5 rounded-full bg-blue-500"></div>
+                <span class="dancing-script text-xl text-white">Lumina</span>
+            </div>
+            <div class="flex items-center gap-8 text-sm font-bold text-gray-400">
+                <a href="index.html" class="hover:text-white transition-colors">Home</a>
+                <a href="index.html#calc" class="hover:text-white transition-colors">Position Sizing</a>
+                <a href="calendar.html" class="hover:text-white transition-colors">Economic Calendar</a>
+                <a href="partners.html" class="hover:text-white transition-colors">Partner</a>
+            </div>
+        </nav>
+    </div>
+
+    <section class="relative pt-32 pb-20 px-6 max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-12 leading-[1.1] text-white">Terms of Service</h1>
+
+        <div class="space-y-12 text-gray-400 leading-relaxed">
+            <div class="glass p-8 rounded-2xl border border-white/5">
+                <h2 class="text-2xl font-bold text-white mb-4">1. Acceptance of Terms</h2>
+                <p>By downloading, installing, or using the Lumina browser extension, you agree to be bound by these
+                    Terms of Service. If you do not agree to these terms, please do not use the extension.</p>
+            </div>
+
+            <div class="glass p-8 rounded-2xl border border-white/5">
+                <h2 class="text-2xl font-bold text-white mb-4">2. Nature of the Service</h2>
+                <p>Lumina is a <span class="text-white font-bold">calculator utility</span>. It helps users
+                    mathematically calculate position sizes based on their input parameters.</p>
+                <p class="mt-4 text-red-400 font-bold border-l-4 border-red-500 pl-4 py-2 bg-red-500/10 rounded-r-lg">
+                    Lumina does NOT offer financial advice, investment recommendations, or trading signals.</p>
+            </div>
+
+            <div class="glass p-8 rounded-2xl border border-white/5">
+                <h2 class="text-2xl font-bold text-white mb-4">3. User Responsibility</h2>
+                <p>You acknowledge that trading involves significant risk of loss. You are solely responsible for:</p>
+                <ul class="list-disc ml-6 mt-2 space-y-2">
+                    <li>Verifying the accuracy of all calculations before placing a trade.</li>
+                    <li>Managing your own risk and account balance.</li>
+                    <li>Any financial losses incurred while using the extension.</li>
+                </ul>
+            </div>
+
+            <div class="glass p-8 rounded-2xl border border-white/5">
+                <h2 class="text-2xl font-bold text-white mb-4">4. Limitation of Liability</h2>
+                <p>Lumina is provided "as is" without warranty of any kind. We are not liable for any damages, direct or
+                    indirect, resulting from the use or inability to use this extension, including but not limited to
+                    financial losses, data loss, or trading errors.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-20 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 text-left">
+            <div class="col-span-2">
+                <div class="flex items-center gap-2 mb-6">
+                    <span class="text-2xl font-bold tracking-tighter text-white uppercase italic">LUMINA</span>
+                </div>
+                <p class="text-gray-500 max-w-sm mb-8 leading-relaxed font-medium">
+                    Designed for practitioners by practitioners. Lumina is community driven and privacy focused.
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-6 uppercase tracking-[0.3em] text-[10px]">Resources</h4>
+                <ul class="space-y-4 text-gray-500 text-sm font-bold uppercase tracking-tight">
+                    <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    <li><a href="disclaimer.html" class="hover:text-white transition-colors">Disclaimer</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-6 uppercase tracking-[0.3em] text-[10px]">Contact</h4>
+                <ul class="space-y-4 text-gray-500 text-sm font-bold uppercase tracking-tight">
+                    <li><a href="mailto:luminarisk.app@gmail.com"
+                            class="hover:text-white transition-colors">luminarisk.app@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 text-center text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+            © 2026 Lumina Trade. All Rights Reserved. Not affiliated with TradingView. Use at your own risk.
+        </div>
+    </footer>
+    <script> lucide.createIcons(); </script>
+</body>
+
+</html>

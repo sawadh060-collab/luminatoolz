@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works | Lumina Sidekick</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --tv-bg: #050505;
+            --sur-bg: #0d0d0d;
+            --accent: #3b82f6;
+        }
+
+        html,
+        body {
+            background-color: #050505 !important;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dancing-script {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .glass {
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-gradient {
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+        }
+
+        .step-line::before {
+            content: '';
+            position: absolute;
+            left: 28px;
+            top: 60px;
+            bottom: -40px;
+            width: 2px;
+            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.5), transparent);
+        }
+
+        .step-line:last-child::before {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-[#050505]">
+    <!-- Fixed Background Gradient -->
+    <div class="fixed inset-0 hero-gradient -z-10 pointer-events-none"></div>
+
+    <!-- Navigation -->
+    <div class="fixed top-6 left-0 w-full z-50 flex justify-center px-6">
+        <nav class="glass px-8 py-3 rounded-full flex items-center gap-12 border border-white/10 shadow-2xl">
+            <div class="flex items-center gap-2 pr-6 border-r border-white/10">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-2.5 h-2.5 rounded-full bg-blue-500"></div>
+                    <span class="dancing-script text-xl text-white">Lumina</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-8 text-sm font-bold text-gray-400">
+                <a href="how-it-works.html" class="text-white transition-colors border-b-2 border-blue-500 pb-1">How It
+                    Works</a>
+                <a href="index.html#calc" class="hover:text-white transition-colors">Position Sizing</a>
+                <a href="calendar.html" class="hover:text-white transition-colors">Economic Calendar</a>
+                <a href="partners.html" class="hover:text-white transition-colors">Partner</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="min-h-screen pt-32 px-6 pb-24">
+        <div class="max-w-5xl mx-auto">
+
+            <!-- Hero -->
+            <div class="text-center mb-20">
+                <h1 class="text-sm font-bold text-blue-500 uppercase tracking-[0.4em] mb-4">Getting Started</h1>
+                <h2 class="text-5xl lg:text-7xl font-black text-white italic tracking-tighter leading-none mb-6">
+                    HOW IT WORKS
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-medium">
+                    Get Lumina running on your TradingView charts in under 2 minutes.
+                    No account needed, no complex setup.
+                </p>
+            </div>
+
+            <!-- Steps -->
+            <div class="space-y-16">
+
+                <!-- Step 1: Install -->
+                <div class="relative step-line">
+                    <div class="flex gap-8 items-start">
+                        <div
+                            class="shrink-0 w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 border border-blue-500/30 text-xl font-black">
+                            1
+                        </div>
+                        <div class="flex-1 space-y-4">
+                            <h3 class="text-2xl font-black text-white uppercase tracking-tight">Install the Extension
+                            </h3>
+                            <p class="text-gray-400 leading-relaxed">
+                                Add Lumina to your browser from the Chrome Web Store or Microsoft Edge Add-ons.
+                                Click the button below to get started — it's completely free.
+                            </p>
+                            <div class="flex gap-4 pt-2">
+                                <a href="#" onclick="openInstallModal(); return false;"
+                                    class="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform">
+                                    <i data-lucide="download" class="w-4 h-4"></i>
+                                    Add to Browser
+                                </a>
+                            </div>
+                            <div class="glass p-6 rounded-2xl mt-6 border-white/5">
+                                <div class="flex items-start gap-4">
+                                    <i data-lucide="shield-check" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i>
+                                    <div>
+                                        <h4 class="font-bold text-white text-sm mb-1">100% Private & Secure</h4>
+                                        <p class="text-xs text-gray-500">Lumina runs entirely on your device. No data is
+                                            ever sent to external servers. We don't track you or store any information.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Open TradingView -->
+                <div class="relative step-line">
+                    <div class="flex gap-8 items-start">
+                        <div
+                            class="shrink-0 w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 border border-emerald-500/30 text-xl font-black">
+                            2
+                        </div>
+                        <div class="flex-1 space-y-4">
+                            <h3 class="text-2xl font-black text-white uppercase tracking-tight">Open TradingView</h3>
+                            <p class="text-gray-400 leading-relaxed">
+                                Navigate to <a href="https://www.tradingview.com" target="_blank"
+                                    class="text-blue-400 hover:underline">tradingview.com</a>
+                                and open any chart. Lumina automatically detects the symbol you're viewing and activates
+                                itself.
+                            </p>
+                            <div class="grid sm:grid-cols-2 gap-4 pt-2">
+                                <div class="glass p-4 rounded-xl border-white/5">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400">
+                                            <i data-lucide="mouse-pointer-click" class="w-4 h-4"></i>
+                                        </div>
+                                        <div>
+                                            <span
+                                                class="text-xs font-bold text-gray-500 uppercase">Auto-Detection</span>
+                                            <p class="text-sm text-white font-medium">Symbol recognized instantly</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="glass p-4 rounded-xl border-white/5">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                                            <i data-lucide="zap" class="w-4 h-4"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-xs font-bold text-gray-500 uppercase">Instant Load</span>
+                                            <p class="text-sm text-white font-medium">Widget appears immediately</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Use Lumina -->
+                <div class="relative step-line">
+                    <div class="flex gap-8 items-start">
+                        <div
+                            class="shrink-0 w-14 h-14 rounded-2xl bg-cyan-500/20 flex items-center justify-center text-cyan-400 border border-cyan-500/30 text-xl font-black">
+                            3
+                        </div>
+                        <div class="flex-1 space-y-4">
+                            <h3 class="text-2xl font-black text-white uppercase tracking-tight">Calculate Your Position
+                            </h3>
+                            <p class="text-gray-400 leading-relaxed">
+                                Enter your risk amount and stop loss in pips. Lumina instantly calculates the optimal
+                                lot size
+                                for your trade. One-click copy to paste directly into your broker.
+                            </p>
+                            <div class="glass p-6 rounded-2xl mt-4 border-white/5 space-y-4">
+                                <h4 class="text-xs font-bold text-gray-600 uppercase tracking-widest">Quick Input Guide
+                                </h4>
+                                <div class="grid sm:grid-cols-3 gap-4">
+                                    <div class="text-center p-4 bg-white/[0.02] rounded-xl">
+                                        <div class="text-2xl font-black text-blue-400 mb-1">$100</div>
+                                        <span class="text-[10px] font-bold text-gray-600 uppercase">Risk Amount</span>
+                                    </div>
+                                    <div class="text-center p-4 bg-white/[0.02] rounded-xl">
+                                        <div class="text-2xl font-black text-emerald-400 mb-1">15</div>
+                                        <span class="text-[10px] font-bold text-gray-600 uppercase">Stop Loss
+                                            (Pips)</span>
+                                    </div>
+                                    <div class="text-center p-4 bg-white/[0.02] rounded-xl">
+                                        <div class="text-2xl font-black text-cyan-400 mb-1">0.67</div>
+                                        <span class="text-[10px] font-bold text-gray-600 uppercase">Lot Size
+                                            Result</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Toggle & Hotkeys -->
+                <div class="relative step-line">
+                    <div class="flex gap-8 items-start">
+                        <div
+                            class="shrink-0 w-14 h-14 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-400 border border-purple-500/30 text-xl font-black">
+                            4
+                        </div>
+                        <div class="flex-1 space-y-4">
+                            <h3 class="text-2xl font-black text-white uppercase tracking-tight">Master the Hotkeys</h3>
+                            <p class="text-gray-400 leading-relaxed">
+                                Keep your chart clean when you need to focus. Toggle Lumina on/off instantly with
+                                keyboard shortcuts.
+                            </p>
+                            <div class="flex flex-wrap gap-4 pt-2">
+                                <div class="glass px-6 py-4 rounded-xl border-white/5 flex items-center gap-4">
+                                    <div class="flex gap-1">
+                                        <kbd
+                                            class="px-3 py-2 bg-white/10 rounded-lg text-white font-bold text-sm border border-white/10">ALT</kbd>
+                                        <span class="text-gray-600 font-bold">+</span>
+                                        <kbd
+                                            class="px-3 py-2 bg-white/10 rounded-lg text-white font-bold text-sm border border-white/10">L</kbd>
+                                    </div>
+                                    <span class="text-gray-400 text-sm">Toggle visibility</span>
+                                </div>
+                                <div class="glass px-6 py-4 rounded-xl border-white/5 flex items-center gap-4">
+                                    <div class="flex gap-1">
+                                        <kbd
+                                            class="px-3 py-2 bg-white/10 rounded-lg text-white font-bold text-sm border border-white/10">ALT</kbd>
+                                        <span class="text-gray-600 font-bold">+</span>
+                                        <kbd
+                                            class="px-3 py-2 bg-white/10 rounded-lg text-white font-bold text-sm border border-white/10">R</kbd>
+                                    </div>
+                                    <span class="text-gray-400 text-sm">Reset position</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Economic News -->
+                <div class="relative">
+                    <div class="flex gap-8 items-start">
+                        <div
+                            class="shrink-0 w-14 h-14 rounded-2xl bg-amber-500/20 flex items-center justify-center text-amber-400 border border-amber-500/30 text-xl font-black">
+                            5
+                        </div>
+                        <div class="flex-1 space-y-4">
+                            <h3 class="text-2xl font-black text-white uppercase tracking-tight">Stay Ahead of the News
+                            </h3>
+                            <p class="text-gray-400 leading-relaxed">
+                                Lumina shows you upcoming high-impact economic events filtered by your current symbol.
+                                Never get caught off guard by surprise volatility again.
+                            </p>
+                            <div class="flex items-center gap-2 pt-2">
+                                <a href="calendar.html"
+                                    class="inline-flex items-center gap-2 px-6 py-3 glass text-white font-bold rounded-xl hover:bg-white/10 transition-colors">
+                                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                                    Learn More About Economic Calendar
+                                </a>
+                            </div>
+                            <div class="glass p-4 rounded-xl border-white/5 mt-4">
+                                <p class="text-[10px] text-gray-600 flex items-center gap-1.5">
+                                    <i data-lucide="database" class="w-3 h-3"></i>
+                                    Economic data powered by
+                                    <a href="https://www.investing.com/economic-calendar/" target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="text-blue-500 hover:text-blue-400 transition-colors font-semibold underline underline-offset-2">
+                                        Investing.com
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Pro Tips / Hidden Features -->
+            <div class="mt-24 space-y-12">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-black italic tracking-tighter text-white uppercase mb-4">
+                        PRO TIPS & <span class="text-gray-500">HIDDEN GEMS</span>
+                    </h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Tip 1: Theme Toggle -->
+                    <div class="glass p-6 rounded-2xl border-white/5 hover:bg-white/5 transition-colors group">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-400 mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="sun" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-white uppercase text-sm mb-2">Theme & View Toggle</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed">
+                            Click the <span class="text-blue-400 font-bold">colored dot</span> to toggle Light/Dark
+                            mode. Click the <span class="dancing-script text-white">Lumina</span> text to switch between
+                            Calculator and News.
+                        </p>
+                    </div>
+
+                    <!-- Tip 2: Copy Coupons -->
+                    <div class="glass p-6 rounded-2xl border-white/5 hover:bg-white/5 transition-colors group">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="ticket" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-white uppercase text-sm mb-2">Exclusive Deals</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed">
+                            Click on any <span class="text-amber-400 font-bold">Gold Sponsor</span> card to reveal
+                            exclusive coupon codes and offers. Click the code to copy!
+                        </p>
+                    </div>
+
+                    <!-- Tip 3: Magic Resizing -->
+                    <div class="glass p-6 rounded-2xl border-white/5 hover:bg-white/5 transition-colors group">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-400 mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="move" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-white uppercase text-sm mb-2">Drag Anywhere</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed">
+                            Click and hold the widget header to drag Lumina anywhere on your screen. It remembers your
+                            favorite spot.
+                        </p>
+                    </div>
+
+                    <!-- Tip 4: Quick Reset -->
+                    <div class="glass p-6 rounded-2xl border-white/5 hover:bg-white/5 transition-colors group">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-400 mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-bold text-white uppercase text-sm mb-2">Instant Reset</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed">
+                            Lost the widget? Press <span
+                                class="text-white font-bold bg-white/10 px-1 rounded">ALT+R</span> to instantly reset it
+                            to the bottom-right corner.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="mt-24 text-center">
+                <div class="glass p-12 rounded-[2rem] border-2 border-blue-600/30 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <i data-lucide="rocket" class="w-48 h-48 -mr-16 -mt-16 text-blue-500"></i>
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black mb-6 italic tracking-tighter text-white uppercase">READY
+                        TO START?</h2>
+                    <p class="text-gray-400 mb-8 max-w-lg mx-auto">
+                        Join thousands of traders who trust Lumina for precise position sizing and timely market
+                        intelligence.
+                    </p>
+                    <a href="#" onclick="openInstallModal(); return false;"
+                        class="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-black text-xl rounded-2xl hover:scale-105 transition-transform shadow-lg shadow-blue-500/20">
+                        <i data-lucide="download"></i>
+                        Get Lumina Free
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                <span class="dancing-script text-xl text-white">Lumina</span>
+            </div>
+            <p class="text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                © 2026 Lumina Trade. All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Browser Install Modal (same as index.html) -->
+    <div id="install-modal"
+        class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 transition-all duration-300 opacity-0">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="closeInstallModal()"></div>
+        <div class="relative glass max-w-md w-full rounded-[2.5rem] p-8 overflow-hidden shadow-2xl border-white/10 scale-95 transition-all duration-300 transform opacity-0 translate-y-4"
+            id="install-modal-content">
+
+            <div class="text-center space-y-6">
+                <div
+                    class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-emerald-500 mx-auto flex items-center justify-center shadow-lg shadow-blue-500/20 text-white">
+                    <i data-lucide="download-cloud" class="w-8 h-8"></i>
+                </div>
+
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-black text-white uppercase italic tracking-tighter">Choose your platform
+                    </h3>
+                    <p class="text-sm text-gray-500 font-bold uppercase tracking-widest">Get Lumina for your preferred
+                        browser</p>
+                </div>
+
+                <div class="space-y-3 pt-4">
+                    <!-- Edge Button -->
+                    <a href="https://microsoftedge.microsoft.com/addons/detail/lumina-sidekick/..." target="_blank"
+                        id="edge-btn"
+                        class="flex items-center gap-4 w-full p-3 rounded-xl bg-white border-2 border-transparent hover:border-blue-500 transition-all group relative overflow-hidden shadow-lg hover:scale-[1.02]">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-[#0C1524] flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M7.462 0H0v7.19h7.462zM16 0H8.538v7.19H16zM7.462 8.211H0V16h7.462zm8.538 0H8.538V16H16z" />
+                            </svg>
+                        </div>
+                        <div class="text-left">
+                            <span class="block text-black font-black uppercase tracking-wider text-sm">Add to
+                                Edge</span>
+                            <span
+                                class="block text-gray-500 text-[10px] font-bold uppercase tracking-widest group-hover:text-blue-600 transition-colors">Recommended</span>
+                        </div>
+                        <i data-lucide="arrow-right"
+                            class="w-5 h-5 text-gray-400 ml-auto group-hover:text-black group-hover:translate-x-1 transition-all"></i>
+                    </a>
+
+                    <!-- Chrome Button -->
+                    <a href="https://chrome.google.com/webstore/detail/..." target="_blank" id="chrome-btn"
+                        class="flex items-center gap-4 w-full p-3 rounded-xl bg-white border-2 border-transparent hover:border-emerald-500 transition-all group relative overflow-hidden shadow-lg hover:scale-[1.02]">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-[#0C1524] flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <line x1="21.17" y1="8" x2="12" y2="8"></line>
+                                <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+                                <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+                            </svg>
+                        </div>
+                        <div class="text-left">
+                            <span class="block text-black font-black uppercase tracking-wider text-sm">Add to
+                                Chrome</span>
+                            <span
+                                class="block text-gray-500 text-[10px] font-bold uppercase tracking-widest group-hover:text-emerald-600 transition-colors">Web
+                                Store</span>
+                        </div>
+                        <i data-lucide="arrow-right"
+                            class="w-5 h-5 text-gray-400 ml-auto group-hover:text-black group-hover:translate-x-1 transition-all"></i>
+                    </a>
+                </div>
+
+                <button onclick="closeInstallModal()"
+                    class="text-xs font-bold text-gray-600 uppercase tracking-widest hover:text-white transition-colors pt-4">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Install Modal Logic
+        const installModal = document.getElementById('install-modal');
+        const installModalContent = document.getElementById('install-modal-content');
+
+        function openInstallModal() {
+            installModal.classList.remove('hidden');
+            setTimeout(() => {
+                installModal.classList.remove('opacity-0');
+                installModalContent.classList.remove('opacity-0', 'translate-y-4', 'scale-95');
+                installModalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeInstallModal() {
+            installModal.classList.add('opacity-0');
+            installModalContent.classList.add('opacity-0', 'translate-y-4', 'scale-95');
+            installModalContent.classList.remove('scale-100');
+
+            setTimeout(() => {
+                installModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // --- Dynamic Config Logic ---
+        async function loadConfig() {
+            try {
+                // Cache busting
+                const res = await fetch(`/api/config?t=${Date.now()}`, { cache: 'no-store' });
+                const config = await res.json();
+                if (config) {
+                    applyConfig(config);
+                }
+            } catch (e) {
+                console.error('Failed to load config', e);
+            }
+        }
+
+        function applyConfig(config) {
+            // Update Browser Links
+            const chromeBtn = document.getElementById('chrome-btn');
+            const edgeBtn = document.getElementById('edge-btn');
+
+            if (chromeBtn) {
+                if (config.toggles.chrome_coming_soon) {
+                    chromeBtn.href = "#chrome-coming-soon";
+                    chromeBtn.onclick = (e) => { e.preventDefault(); };
+
+                    // Visual Disabled State - NO GRAYSCALE, NO BLUR on parent
+                    chromeBtn.classList.add('cursor-not-allowed', 'pointer-events-none');
+                    chromeBtn.classList.remove('hover:scale-[1.02]', 'hover:border-emerald-500', 'group', 'shadow-lg');
+
+                    // Dim the text areas
+                    const textDiv = chromeBtn.querySelector('.text-left');
+                    const arrowIcon = chromeBtn.querySelector('[data-lucide="arrow-right"]');
+                    const iconContainer = chromeBtn.querySelector('.w-10'); // The black icon box
+
+                    if (textDiv) textDiv.classList.add('opacity-10');
+                    if (arrowIcon) arrowIcon.classList.add('opacity-10');
+                    if (iconContainer) {
+                        iconContainer.classList.remove('opacity-40', 'grayscale');
+                        iconContainer.classList.add('opacity-100', 'relative', 'z-30'); // Boost Z-index
+                    }
+
+                    // Add premium overlay but AVOID BACKDROP BLUR on icons
+                    if (!chromeBtn.querySelector('.overlay-msg')) {
+                        const div = document.createElement('div');
+                        // Use bg-black/40 instead of backdrop-blur to keep icons sharp
+                        div.className = 'overlay-msg absolute inset-0 flex items-center justify-center rounded-xl z-20 bg-black/40';
+                        div.innerHTML = `
+                            <div class="relative overflow-hidden bg-white border border-white/20 px-4 py-2 rounded-lg shadow-2xl shadow-black/60">
+                                <span class="text-black font-black text-[10px] uppercase tracking-[0.2em] relative z-10">Coming Soon</span>
+                                <div class="absolute inset-x-[-100%] inset-y-0 bg-gradient-to-r from-transparent via-white/80 to-transparent skew-x-[-20deg] animate-shimmer"></div>
+                            </div>
+                        `;
+                        chromeBtn.appendChild(div);
+                    }
+                } else {
+                    chromeBtn.href = config.links.chrome || "#";
+                    chromeBtn.onclick = null;
+                    chromeBtn.classList.remove('cursor-not-allowed', 'pointer-events-none');
+                    chromeBtn.classList.add('hover:scale-[1.02]', 'hover:border-emerald-500', 'group', 'shadow-lg');
+
+                    const textDiv = chromeBtn.querySelector('.text-left');
+                    const arrowIcon = chromeBtn.querySelector('[data-lucide="arrow-right"]');
+                    const iconContainer = chromeBtn.querySelector('.w-10');
+
+                    if (textDiv) textDiv.classList.remove('opacity-10');
+                    if (arrowIcon) arrowIcon.classList.remove('opacity-10');
+                    if (iconContainer) iconContainer.classList.remove('z-30');
+
+                    const overlay = chromeBtn.querySelector('.overlay-msg');
+                    if (overlay) overlay.remove();
+                }
+            }
+
+            if (edgeBtn) {
+                if (config.toggles.edge_coming_soon) {
+                    edgeBtn.href = "#edge-coming-soon";
+                    edgeBtn.onclick = (e) => { e.preventDefault(); };
+
+                    edgeBtn.classList.add('cursor-not-allowed', 'pointer-events-none');
+                    edgeBtn.classList.remove('hover:scale-[1.02]', 'hover:border-blue-500', 'group', 'shadow-lg');
+
+                    const textDiv = edgeBtn.querySelector('.text-left');
+                    const arrowIcon = edgeBtn.querySelector('[data-lucide="arrow-right"]');
+                    const iconContainer = edgeBtn.querySelector('.w-10');
+
+                    if (textDiv) textDiv.classList.add('opacity-10');
+                    if (arrowIcon) arrowIcon.classList.add('opacity-10');
+                    if (iconContainer) {
+                        iconContainer.classList.remove('opacity-40', 'grayscale');
+                        iconContainer.classList.add('opacity-100', 'relative', 'z-30');
+                    }
+
+                    if (!edgeBtn.querySelector('.overlay-msg')) {
+                        const div = document.createElement('div');
+                        div.className = 'overlay-msg absolute inset-0 flex items-center justify-center rounded-xl z-20 bg-black/40';
+                        div.innerHTML = `
+                            <div class="relative overflow-hidden bg-white border border-white/20 px-4 py-2 rounded-lg shadow-2xl shadow-black/60">
+                                <span class="text-black font-black text-[10px] uppercase tracking-[0.2em] relative z-10">Coming Soon</span>
+                                <div class="absolute inset-x-[-100%] inset-y-0 bg-gradient-to-r from-transparent via-white/80 to-transparent skew-x-[-20deg] animate-shimmer"></div>
+                            </div>
+                        `;
+                        edgeBtn.appendChild(div);
+                    }
+                } else {
+                    edgeBtn.href = config.links.edge || "#";
+                    edgeBtn.onclick = null;
+                    edgeBtn.classList.remove('cursor-not-allowed', 'pointer-events-none');
+                    edgeBtn.classList.add('hover:scale-[1.02]', 'hover:border-blue-500', 'group', 'shadow-lg');
+
+                    const textDiv = edgeBtn.querySelector('.text-left');
+                    const arrowIcon = edgeBtn.querySelector('[data-lucide="arrow-right"]');
+                    const iconContainer = edgeBtn.querySelector('.w-10');
+
+                    if (textDiv) textDiv.classList.remove('opacity-10');
+                    if (arrowIcon) arrowIcon.classList.remove('opacity-10');
+                    if (iconContainer) iconContainer.classList.remove('z-30');
+
+                    const overlay = edgeBtn.querySelector('.overlay-msg');
+                    if (overlay) overlay.remove();
+                }
+            }
+        }
+
+        loadConfig();
+    </script>
+</body>
+
+</html>

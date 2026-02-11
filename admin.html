@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Lumina</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        html,
+        body {
+            background-color: #050505 !important;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .glass {
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .input-dark {
+            background: #0d0d0d;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            width: 100%;
+        }
+
+        .input-dark:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-[#050505]">
+    <div id="loading" class="min-h-screen flex items-center justify-center">
+        <div class="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></div>
+    </div>
+
+    <div id="content" class="min-h-screen hidden">
+        <!-- Sidebar -->
+        <aside class="fixed left-0 top-0 h-full w-64 glass border-r border-white/5 z-20">
+            <div class="p-8 border-b border-white/5">
+                <a href="/" class="block hover:opacity-80 transition-opacity">
+                    <h1 class="text-2xl font-black text-white italic tracking-tighter">LUMINA</h1>
+                </a>
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Admin Panel</p>
+            </div>
+            <nav class="p-4 space-y-2">
+                <a href="/"
+                    class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all font-medium flex items-center gap-3">
+                    <i data-lucide="external-link" class="w-4 h-4"></i> View Website
+                </a>
+                <div class="h-4"></div>
+                <button onclick="switchTab('links')"
+                    class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all font-medium flex items-center gap-3 active-tab"
+                    id="tab-links">
+                    <i data-lucide="link" class="w-4 h-4"></i> Links
+                </button>
+                <button onclick="switchTab('revenue')"
+                    class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all font-medium flex items-center gap-3"
+                    id="tab-revenue">
+                    <i data-lucide="dollar-sign" class="w-4 h-4"></i> Revenue
+                </button>
+                <button onclick="switchTab('toggles')"
+                    class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all font-medium flex items-center gap-3"
+                    id="tab-toggles">
+                    <i data-lucide="toggle-left" class="w-4 h-4"></i> Features
+                </button>
+                <button onclick="switchTab('sponsors')"
+                    class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all font-medium flex items-center gap-3"
+                    id="tab-sponsors">
+                    <i data-lucide="users" class="w-4 h-4"></i> Sponsors
+                </button>
+            </nav>
+            <div class="absolute bottom-4 left-0 w-full p-4">
+                <button id="logout-btn"
+                    class="w-full text-left px-4 py-3 rounded-xl hover:bg-red-500/10 text-red-500 transition-all font-medium flex items-center gap-3">
+                    <i data-lucide="log-out" class="w-4 h-4"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 p-8 max-w-5xl mx-auto">
+            <div class="flex justify-between items-center mb-8">
+                <h2 id="page-title" class="text-3xl font-bold text-white">Manage Links</h2>
+                <button onclick="saveConfig()" id="save-btn"
+                    class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors">
+                    <i data-lucide="save" class="w-4 h-4"></i> Save Changes
+                </button>
+            </div>
+
+            <!-- Quick Stats Header -->
+            <div class="grid grid-cols-3 gap-6 mb-12">
+                <div class="glass p-6 rounded-2xl border border-white/5 bg-blue-500/5">
+                    <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1">Active Users</p>
+                    <div class="flex items-baseline gap-2">
+                        <span id="quick-users" class="text-3xl font-black text-white italic tracking-tighter">0</span>
+                        <span class="text-xs font-bold text-gray-500 uppercase">Total</span>
+                    </div>
+                </div>
+                <div class="glass p-6 rounded-2xl border border-white/5 bg-emerald-500/5">
+                    <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-1">Price Rate</p>
+                    <div class="flex items-baseline gap-2">
+                        <span id="quick-rate" class="text-3xl font-black text-white italic tracking-tighter">$0</span>
+                        <span class="text-xs font-bold text-gray-500 uppercase">per 100</span>
+                    </div>
+                </div>
+                <div class="glass p-6 rounded-2xl border border-white/5 bg-purple-500/5">
+                    <p class="text-[10px] font-black text-purple-400 uppercase tracking-widest mb-1">Slot Revenue</p>
+                    <div class="flex items-baseline gap-2">
+                        <span id="quick-total" class="text-3xl font-black text-white italic tracking-tighter">$0</span>
+                        <span class="text-xs font-bold text-gray-500 uppercase">/month</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Links Section -->
+            <section id="section-links" class="space-y-8">
+                <div class="glass p-8 rounded-2xl border border-white/5">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <i data-lucide="chrome" class="w-5 h-5 text-blue-400"></i> Browser Extensions
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Chrome
+                                Web Store</label>
+                            <input type="text" id="link-chrome" class="input-dark"
+                                placeholder="https://chrome.google.com/...">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Microsoft
+                                Edge Add-on</label>
+                            <input type="text" id="link-edge" class="input-dark"
+                                placeholder="https://microsoftedge.microsoft.com/...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-2xl border border-white/5">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <i data-lucide="share-2" class="w-5 h-5 text-purple-400"></i> Social & Community
+                    </h3>
+                    <div class="grid grid-cols-3 gap-6">
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Discord</label>
+                            <input type="text" id="link-discord" class="input-dark"
+                                placeholder="https://discord.gg/...">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Twitter
+                                / X</label>
+                            <input type="text" id="link-twitter" class="input-dark"
+                                placeholder="https://twitter.com/...">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">GitHub</label>
+                            <input type="text" id="link-github" class="input-dark" placeholder="https://github.com/...">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Revenue Section -->
+            <section id="section-revenue" class="hidden space-y-8">
+                <div class="glass p-8 rounded-2xl border border-white/5 bg-emerald-500/5">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <i data-lucide="piggy-bank" class="w-5 h-5 text-emerald-400"></i> Pricing Engine
+                    </h3>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="space-y-4">
+                            <div>
+                                <label
+                                    class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Total
+                                    User Base</label>
+                                <input type="number" id="stats-users" class="input-dark py-4 text-xl font-bold"
+                                    placeholder="e.g. 1000" oninput="updatePricePreview()">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Price
+                                    Rate ($ per 100 users)</label>
+                                <input type="number" id="stats-rate" class="input-dark py-4 text-xl font-bold"
+                                    placeholder="e.g. 50" oninput="updatePricePreview()">
+                            </div>
+                        </div>
+                        <div
+                            class="flex flex-col justify-center items-center bg-white/5 rounded-3xl p-8 border border-white/5">
+                            <span
+                                class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-4">Calculated
+                                Sponsor Price</span>
+                            <div class="flex flex-col items-center">
+                                <span class="text-6xl font-black text-white italic tracking-tighter leading-none">$<span
+                                        id="revenue-price-display">0</span></span>
+                                <span class="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">per sponsor
+                                    / month</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-2xl border border-white/5">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <i data-lucide="paypal" class="w-5 h-5 text-blue-400"></i> Payment Gateway
+                    </h3>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">PayPal.me
+                            Link</label>
+                        <input type="text" id="link-paypal" class="input-dark py-4"
+                            placeholder="https://paypal.me/yourname">
+                        <p class="mt-4 text-[10px] text-gray-500 font-bold uppercase tracking-widest leading-relaxed">
+                            <i data-lucide="info" class="w-3 h-3 inline mr-1 text-blue-400"></i>
+                            The system automatically appends the calculated price to this link for sponsors.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Toggles Section -->
+            <section id="section-toggles" class="hidden space-y-6">
+                <div class="glass p-6 rounded-2xl border border-white/5 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Chrome "Coming Soon" Mode</h3>
+                        <p class="text-sm text-gray-500">Disables the install button and shows "Coming Soon" badge.</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="toggle-chrome" class="sr-only peer" onchange="saveConfig()">
+                        <div
+                            class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                        </div>
+                    </label>
+                </div>
+
+                <div class="glass p-6 rounded-2xl border border-white/5 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Edge "Coming Soon" Mode</h3>
+                        <p class="text-sm text-gray-500">Disables the install button and shows "Coming Soon" badge.</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="toggle-edge" class="sr-only peer" onchange="saveConfig()">
+                        <div
+                            class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                        </div>
+                    </label>
+                </div>
+
+                <div class="glass p-6 rounded-2xl border border-white/5 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Blur Sponsors Page</h3>
+                        <p class="text-sm text-gray-500">Blurs the sponsor grid and prevents interaction.</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="toggle-blur" class="sr-only peer" onchange="saveConfig()">
+                        <div
+                            class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                        </div>
+                    </label>
+                </div>
+                <div class="glass p-6 rounded-2xl border border-white/5 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Show "Coming Soon" on Sponsors</h3>
+                        <p class="text-sm text-gray-500">Displays a large "Partnerships Opening Soon" message over the
+                            blurred grid.</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="toggle-sponsors-msg" class="sr-only peer" onchange="saveConfig()">
+                        <div
+                            class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                        </div>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Sponsors Section -->
+            <section id="section-sponsors" class="hidden space-y-8">
+                <div class="glass p-8 rounded-2xl border border-white/5">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-white">Sponsor Slots</h3>
+                        <button onclick="addSponsor()"
+                            class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors flex items-center gap-2">
+                            <i data-lucide="plus" class="w-4 h-4"></i> Add Slot
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr
+                                    class="text-xs font-bold text-gray-500 uppercase tracking-widest border-b border-white/10">
+                                    <th class="pb-4 pl-4">Slot</th>
+                                    <th class="pb-4">Sponsor</th>
+                                    <th class="pb-4">Email</th>
+                                    <th class="pb-4">Payment Ref</th>
+                                    <th class="pb-4">Expiry</th>
+                                    <th class="pb-4">Status</th>
+                                    <th class="pb-4 text-right pr-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sponsors-table" class="text-sm">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Edit Sponsor Modal -->
+    <div id="sponsor-modal"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="glass w-full max-w-md p-8 rounded-2xl border border-white/10">
+            <h3 class="text-xl font-bold text-white mb-6">Edit Sponsor</h3>
+            <div class="space-y-4">
+                <input type="hidden" id="edit-id">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Name</label>
+                    <input type="text" id="edit-name" class="input-dark">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Company
+                        Email</label>
+                    <input type="email" id="edit-email" class="input-dark">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">URL</label>
+                    <input type="text" id="edit-url" class="input-dark">
+                </div>
+                <div>
+                    <label
+                        class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Description</label>
+                    <input type="text" id="edit-description" class="input-dark">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Coupon
+                            Code</label>
+                        <input type="text" id="edit-code" class="input-dark" placeholder="e.g. LUMINA10">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Offer
+                            Text</label>
+                        <input type="text" id="edit-offer" class="input-dark" placeholder="e.g. 10% Discount">
+                    </div>
+                </div>
+                <div class="space-y-3 mb-6">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest">Brand Color
+                        Palette</label>
+                    <div class="grid grid-cols-10 gap-1.5" id="color-palette-admin">
+                        <!-- Populated via script -->
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" id="edit-color" class="input-dark font-mono" placeholder="#ffffff"
+                            oninput="document.getElementById('edit-color-picker').value = this.value; selectColorAdmin(this.value, true)">
+                        <div class="relative group">
+                            <input type="color" id="edit-color-picker"
+                                class="bg-transparent h-10 w-10 border-0 cursor-pointer"
+                                oninput="document.getElementById('edit-color').value = this.value; selectColorAdmin(this.value, true)">
+                            <div
+                                class="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-[8px] font-bold text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                                Custom</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Slot
+                            #</label>
+                        <input type="number" id="edit-slot" class="input-dark">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Expiry
+                            Date</label>
+                        <input type="date" id="edit-expiry" class="input-dark">
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Brand Icon
+                        (SVG
+                        ONLY)</label>
+                    <div id="drop-zone"
+                        class="w-full h-32 bg-white/5 border-2 border-dashed border-white/10 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-blue-500/50 hover:bg-blue-500/5 transition-all group overflow-hidden relative">
+                        <input type="file" id="icon-input" class="hidden" accept=".svg">
+                        <i data-lucide="upload-cloud"
+                            class="w-8 h-8 text-gray-500 group-hover:text-blue-500 transition-colors"></i>
+                        <p
+                            class="text-[10px] font-bold text-gray-500 uppercase tracking-widest group-hover:text-gray-400">
+                            Drag & Drop or Click (SVG ONLY)</p>
+                        <div id="preview-container"
+                            class="absolute inset-0 bg-[#0d0d0d] hidden items-center justify-center p-4">
+                            <img id="icon-preview" class="max-h-full max-w-full rounded-lg shadow-2xl">
+                            <button type="button" onclick="resetUpload(event)"
+                                class="absolute top-2 right-2 p-1.5 rounded-full bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-all">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="edit-svg">
+                </div>
+                <div class="hidden">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Logo URL
+                        (Legacy)</label>
+                    <input type="text" id="edit-image" class="input-dark">
+                </div>
+                <div class="hidden">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Tier</label>
+                    <select id="edit-tier" class="input-dark bg-[#0d0d0d]">
+                        <option value="gold">Gold</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Status</label>
+                    <select id="edit-status" class="input-dark bg-[#0d0d0d]">
+                        <option value="active">Active</option>
+                        <option value="pending">Pending</option>
+                        <option value="empty">Empty</option>
+                    </select>
+                </div>
+                <div id="sponsor-error"
+                    class="hidden bg-red-500/10 border border-red-500/20 rounded-xl p-3 flex items-center gap-3 text-red-500 text-[10px] font-bold uppercase tracking-wider mb-4">
+                    <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                    <span id="sponsor-error-text">Please fill all fields correctly</span>
+                </div>
+            </div>
+            <div class="flex justify-end gap-3 mt-8">
+                <button onclick="closeModal()"
+                    class="px-4 py-2 rounded-lg text-gray-400 hover:text-white font-medium transition-colors">Cancel</button>
+                <button onclick="saveSponsorChange()"
+                    class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg font-bold transition-colors">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentConfig = null;
+
+        async function init() {
+            const token = localStorage.getItem('_lmn_token');
+            if (!token) window.location.href = 'secret.html';
+
+            try {
+                // Verify auth
+                const verifyRes = await fetch('/api/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token })
+                });
+                const verifyData = await verifyRes.json();
+                if (!verifyData.valid) throw new Error('Invalid token');
+
+                // Load Config
+                const configRes = await fetch('/api/config');
+                currentConfig = await configRes.json();
+
+                populateUI();
+
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('content').classList.remove('hidden');
+                initColorPaletteAdmin();
+                lucide.createIcons();
+            } catch (e) {
+                localStorage.removeItem('_lmn_token');
+                window.location.href = 'secret.html';
+            }
+        }
+
+        function formatTimeLeft(expiry) {
+            if (!expiry || isNaN(expiry)) return 'N/A';
+            const now = Date.now();
+            const diff = expiry - now;
+            if (diff <= 0) return 'Expired';
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            if (days > 0) return `${days}d ${hours}h left`;
+            if (hours > 0) return `${hours}h ${minutes}m left`;
+            return `${minutes}m left`;
+        }
+
+        function populateUI() {
+            if (!currentConfig) return;
+
+            // Links
+            document.getElementById('link-chrome').value = currentConfig.links.chrome || '';
+            document.getElementById('link-edge').value = currentConfig.links.edge || '';
+            document.getElementById('link-discord').value = currentConfig.links.discord || '';
+            document.getElementById('link-twitter').value = currentConfig.links.twitter || '';
+            document.getElementById('link-github').value = currentConfig.links.github || '';
+            document.getElementById('link-paypal').value = currentConfig.links.paypal || '';
+
+            // Stats
+            document.getElementById('stats-users').value = currentConfig.user_base || 0;
+            document.getElementById('stats-rate').value = currentConfig.price_per_100_users || 50;
+            updatePricePreview();
+
+            // Toggles
+            document.getElementById('toggle-chrome').checked = currentConfig.toggles.chrome_coming_soon;
+            document.getElementById('toggle-edge').checked = currentConfig.toggles.edge_coming_soon;
+            document.getElementById('toggle-blur').checked = currentConfig.toggles.sponsors_blur;
+            document.getElementById('toggle-sponsors-msg').checked = currentConfig.toggles.sponsors_coming_soon_msg;
+
+            // Sponsors Table
+            renderSponsorsTable();
+        }
+
+        function renderSponsorsTable() {
+            const tbody = document.getElementById('sponsors-table');
+            tbody.innerHTML = '';
+
+            const statusColors = {
+                active: 'bg-emerald-500/10 text-emerald-500',
+                pending: 'bg-amber-500/10 text-amber-500 font-black italic',
+                empty: 'bg-gray-500/10 text-gray-500'
+            };
+
+            currentConfig.sponsors.sort((a, b) => a.slot - b.slot).forEach(sponsor => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-white/5 hover:bg-white/[0.02] transition-colors group';
+
+                const timeLeft = sponsor.status === 'active' ? formatTimeLeft(sponsor.expiry) : '—';
+
+                tr.innerHTML = `
+                    <td class="py-4 pl-4 font-mono text-gray-500">#${sponsor.slot}</td>
+                    <td class="py-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center p-1 overflow-hidden">
+                                ${sponsor.svg || `<span class="text-[10px] font-black">${sponsor.name?.[0] || '?'}</span>`}
+                            </div>
+                            <span class="font-bold text-white">${sponsor.name || 'Empty'}</span>
+                        </div>
+                    </td>
+                    <td class="py-4">
+                        <span class="text-gray-400 font-mono text-[10px] uppercase tracking-wider">${sponsor.email || '—'}</span>
+                    </td>
+                    <td class="py-4">
+                        <code class="text-[10px] bg-white/5 px-2 py-1 rounded text-blue-400 font-mono">${sponsor.txId || '—'}</code>
+                    </td>
+                    <td class="py-4 text-xs font-bold text-gray-400">${timeLeft}</td>
+                    <td class="py-4">
+                        <span class="px-2 py-1 rounded text-[10px] font-black uppercase tracking-widest ${statusColors[sponsor.status]}">
+                            ${sponsor.status}
+                        </span>
+                    </td>
+                    <td class="py-4 pr-4 text-right">
+                        <div class="flex items-center justify-end gap-2">
+                            ${sponsor.status === 'pending' ? `
+                                <button onclick="approveSponsor(${sponsor.id})" class="p-2 rounded-lg bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 transition-all" title="Approve Payment">
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                </button>
+                            ` : ''}
+                            <button onclick="editSponsor(${sponsor.id})" class="text-gray-500 hover:text-blue-400 p-2 transition-colors"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                            <button onclick="deleteSponsor(${sponsor.id})" class="text-gray-500 hover:text-red-400 p-2 transition-colors"><i data-lucide="trash" class="w-4 h-4"></i></button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            lucide.createIcons();
+        }
+
+        function switchTab(tab) {
+            ['links', 'revenue', 'toggles', 'sponsors'].forEach(t => {
+                document.getElementById(`section-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).classList.remove('bg-white/10', 'text-white');
+            });
+
+            document.getElementById(`section-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}`).classList.add('bg-white/10', 'text-white');
+
+            const titles = {
+                links: 'Manage Links',
+                revenue: 'Revenue & Pricing',
+                toggles: 'Feature Toggles',
+                sponsors: 'Manage Sponsors'
+            };
+            document.getElementById('page-title').innerText = titles[tab];
+        }
+
+        async function saveConfig() {
+            const btn = document.getElementById('save-btn');
+            btn.innerHTML = '<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> Saving...';
+
+            // Collect Data
+            const newConfig = {
+                links: {
+                    chrome: document.getElementById('link-chrome').value,
+                    edge: document.getElementById('link-edge').value,
+                    discord: document.getElementById('link-discord').value,
+                    twitter: document.getElementById('link-twitter').value,
+                    github: document.getElementById('link-github').value,
+                    paypal: document.getElementById('link-paypal').value
+                },
+                toggles: {
+                    chrome_coming_soon: document.getElementById('toggle-chrome').checked,
+                    edge_coming_soon: document.getElementById('toggle-edge').checked,
+                    sponsors_blur: document.getElementById('toggle-blur').checked,
+                    sponsors_coming_soon_msg: document.getElementById('toggle-sponsors-msg').checked
+                },
+                user_base: parseInt(document.getElementById('stats-users').value) || 0,
+                price_per_100_users: parseInt(document.getElementById('stats-rate').value) || 50,
+                sponsors: currentConfig.sponsors
+            };
+
+            const token = localStorage.getItem('_lmn_token');
+            const res = await fetch('/api/config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token, data: newConfig })
+            });
+
+            if (res.ok) {
+                setTimeout(() => {
+                    btn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> Saved';
+                    btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+                    setTimeout(() => {
+                        btn.innerHTML = '<i data-lucide="save" class="w-4 h-4"></i> Save Changes';
+                        btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+                        lucide.createIcons();
+                    }, 2000);
+                    lucide.createIcons();
+                }, 500);
+            }
+        }
+
+        function updatePricePreview() {
+            const users = parseInt(document.getElementById('stats-users').value) || 0;
+            const rate = parseInt(document.getElementById('stats-rate').value) || 0;
+            const price = Math.round((users / 100) * rate);
+
+            // Update inputs and preview
+            document.getElementById('revenue-price-display').textContent = price;
+
+            // Update Quick Stats Header
+            document.getElementById('quick-users').textContent = users.toLocaleString();
+            document.getElementById('quick-rate').textContent = '$' + rate;
+            document.getElementById('quick-total').textContent = '$' + price;
+        }
+
+        const iconInput = document.getElementById('icon-input');
+        const iconData = document.getElementById('edit-svg');
+        const dropZone = document.getElementById('drop-zone');
+        const previewContainer = document.getElementById('preview-container');
+        const iconPreview = document.getElementById('icon-preview');
+
+        // Upload Logic
+        dropZone.onclick = () => iconInput.click();
+
+        ['dragover', 'dragenter'].forEach(type => {
+            dropZone.addEventListener(type, (e) => {
+                e.preventDefault();
+                dropZone.classList.add('border-blue-500/50', 'bg-blue-500/5');
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(type => {
+            dropZone.addEventListener(type, (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-blue-500/50', 'bg-blue-500/5');
+            });
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        });
+
+        iconInput.onchange = (e) => {
+            const file = e.target.files[0];
+            handleFile(file);
+        };
+
+        const brandColors = [
+            '#4285F4', '#EA4335', '#FBBC05', '#34A853', '#00A4EF',
+            '#FF9900', '#1877F2', '#1DB954', '#FF0000', '#E60023',
+            '#0A66C2', '#5865F2', '#FF4500', '#25D366', '#000000',
+            '#555555', '#4A154B', '#E1306C', '#26A5E4', '#3B82F6'
+        ];
+
+        function initColorPaletteAdmin() {
+            const palette = document.getElementById('color-palette-admin');
+            if (!palette) return;
+            palette.innerHTML = '';
+            brandColors.forEach(color => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'w-full aspect-square rounded-lg border-2 border-transparent hover:scale-110 transition-transform shadow-lg cursor-pointer color-swatch-admin';
+                btn.style.backgroundColor = color;
+                btn.onclick = () => selectColorAdmin(color);
+                btn.setAttribute('data-color', color.toLowerCase());
+                palette.appendChild(btn);
+            });
+        }
+
+        function selectColorAdmin(color, isManual = false) {
+            document.getElementById('edit-color').value = color;
+            document.getElementById('edit-color-picker').value = color;
+
+            document.querySelectorAll('.color-swatch-admin').forEach(s => {
+                const swatchColor = s.getAttribute('data-color');
+                if (swatchColor === color.toLowerCase()) {
+                    s.classList.add('border-white', 'scale-110');
+                } else {
+                    s.classList.remove('border-white', 'scale-110');
+                }
+            });
+        }
+
+        async function handleFile(file) {
+            if (!file) return;
+            const reader = new FileReader();
+
+            if (file.type === 'image/svg+xml') {
+                reader.onload = async (e) => {
+                    const content = e.target.result;
+                    iconData.value = content;
+
+                    // Auto-extract color
+                    const parser = new DOMParser();
+                    const svgDoc = parser.parseFromString(content, "image/svg+xml");
+                    const color = extractColorFromSVG(svgDoc);
+                    if (color) {
+                        document.getElementById('edit-color').value = color;
+                        document.getElementById('edit-color-picker').value = color;
+                    }
+
+                    const blob = new Blob([content], { type: 'image/svg+xml' });
+                    iconPreview.src = URL.createObjectURL(blob);
+                    previewContainer.classList.remove('hidden');
+                    previewContainer.classList.add('flex');
+                };
+                reader.readAsText(file);
+                // Removed non-SVG image handling to enforce SVG-only
+            } else {
+                const errorEl = document.getElementById('sponsor-error');
+                const errorText = document.getElementById('sponsor-error-text');
+                errorEl.classList.remove('hidden');
+                errorText.textContent = 'Please upload an SVG file only.';
+                lucide.createIcons();
+            }
+        }
+
+        function extractColorFromSVG(svgDoc) {
+            const elements = svgDoc.querySelectorAll('[fill], [stroke]');
+            for (let el of elements) {
+                const fill = el.getAttribute('fill');
+                const stroke = el.getAttribute('stroke');
+                const color = (fill && fill !== 'none' && fill !== 'currentColor' && !fill.startsWith('url')) ? fill : stroke;
+                if (color && color !== 'black' && color !== '#000000' && color !== 'white' && color !== '#ffffff') {
+                    if (color.startsWith('#')) return color;
+                    if (color.startsWith('rgb')) return rgbToHex(color);
+                    return color;
+                }
+            }
+            return null;
+        }
+
+        function extractColorFromImage(dataUrl) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = 1;
+                    canvas.height = 1;
+                    ctx.drawImage(img, 0, 0, 1, 1);
+                    const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+                    resolve(rgbToHex(`rgb(${r},${g},${b})`));
+                };
+                img.src = dataUrl;
+            });
+        }
+
+        function rgbToHex(rgb) {
+            const parts = rgb.match(/\d+/g);
+            if (!parts) return null;
+            return "#" + parts.slice(0, 3).map(x => {
+                const hex = parseInt(x).toString(16);
+                return hex.length === 1 ? "0" + hex : hex;
+            }).join("");
+        }
+
+        function resetUpload(e) {
+            if (e) e.stopPropagation();
+            iconData.value = '';
+            iconInput.value = '';
+            previewContainer.classList.add('hidden');
+            previewContainer.classList.remove('flex');
+        }
+
+        // Sponsor CRUD Logic
+        function editSponsor(id) {
+            const s = currentConfig.sponsors.find(x => x.id === id);
+            if (!s) return;
+
+            document.getElementById('edit-id').value = s.id;
+            document.getElementById('edit-name').value = s.name || '';
+            document.getElementById('edit-email').value = s.email || '';
+            document.getElementById('edit-url').value = s.url || '';
+            document.getElementById('edit-description').value = s.description || '';
+            document.getElementById('edit-color').value = s.color || '#ffffff';
+            document.getElementById('edit-color-picker').value = s.color || '#ffffff';
+            selectColorAdmin(s.color || '#ffffff');
+
+            const svg = s.svg || '';
+            iconData.value = svg;
+            if (svg) {
+                if (svg.startsWith('data:')) {
+                    iconPreview.src = svg;
+                } else {
+                    const blob = new Blob([svg], { type: 'image/svg+xml' });
+                    iconPreview.src = URL.createObjectURL(blob);
+                }
+                previewContainer.classList.remove('hidden');
+                previewContainer.classList.add('flex');
+            } else {
+                resetUpload();
+            }
+
+            document.getElementById('edit-tier').value = s.tier;
+            document.getElementById('edit-slot').value = s.slot;
+            document.getElementById('edit-status').value = s.status;
+            document.getElementById('edit-code').value = s.code || '';
+            document.getElementById('edit-offer').value = s.offer || '';
+
+            if (s.expiry && !isNaN(s.expiry)) {
+                const date = new Date(s.expiry);
+                document.getElementById('edit-expiry').value = date.toISOString().split('T')[0];
+            } else {
+                document.getElementById('edit-expiry').value = '';
+            }
+
+            document.getElementById('sponsor-modal').classList.remove('hidden');
+            document.getElementById('sponsor-modal').classList.add('flex');
+        }
+
+        function addSponsor() {
+            const newId = Math.max(...currentConfig.sponsors.map(s => s.id), 0) + 1;
+            document.getElementById('edit-id').value = newId;
+            document.getElementById('edit-name').value = 'New Sponsor';
+            document.getElementById('edit-email').value = '';
+            document.getElementById('edit-url').value = '#';
+            document.getElementById('edit-description').value = '';
+            document.getElementById('edit-color').value = '#ffffff';
+            document.getElementById('edit-color-picker').value = '#ffffff';
+            resetUpload();
+            document.getElementById('edit-tier').value = 'bronze';
+            document.getElementById('edit-slot').value = currentConfig.sponsors.length + 1;
+            document.getElementById('edit-status').value = 'empty';
+            document.getElementById('edit-code').value = '';
+            document.getElementById('edit-offer').value = '';
+            document.getElementById('edit-expiry').value = '';
+
+            document.getElementById('sponsor-modal').classList.remove('hidden');
+            document.getElementById('sponsor-modal').classList.add('flex');
+        }
+
+        async function approveSponsor(id) {
+            if (!confirm('Are you sure you want to approve this sponsorship? This will start the 30-day timer and make it live.')) return;
+
+            const sponsor = currentConfig.sponsors.find(s => s.id === id);
+            if (!sponsor) return;
+
+            // Activate and set expiry (30 days)
+            sponsor.status = 'active';
+            sponsor.expiry = Date.now() + (30 * 24 * 60 * 60 * 1000);
+
+            renderSponsorsTable();
+            saveConfig();
+            alert('Success! Sponsorship is now active for 30 days.');
+        }
+
+        function saveSponsorChange() {
+            const id = parseInt(document.getElementById('edit-id').value);
+            const status = document.getElementById('edit-status').value;
+            const expiryStr = document.getElementById('edit-expiry').value;
+
+            // Handle logical expiry
+            let expiry = expiryStr ? new Date(expiryStr).getTime() : "";
+
+            const index = currentConfig.sponsors.findIndex(x => x.id === id);
+
+            // If we are changing from pending to active manually, set default expiry
+            if (index >= 0 && currentConfig.sponsors[index].status === 'pending' && status === 'active' && !expiry) {
+                expiry = Date.now() + (30 * 24 * 60 * 60 * 1000);
+            }
+
+            const sponsor = {
+                id: id,
+                name: document.getElementById('edit-name').value,
+                email: document.getElementById('edit-email').value,
+                url: document.getElementById('edit-url').value,
+                description: document.getElementById('edit-description').value,
+                color: document.getElementById('edit-color').value,
+                svg: document.getElementById('edit-svg').value,
+                code: document.getElementById('edit-code').value,
+                offer: document.getElementById('edit-offer').value,
+                tier: document.getElementById('edit-tier').value,
+                slot: parseInt(document.getElementById('edit-slot').value),
+                status: status,
+                expiry: expiry,
+                txId: (index >= 0) ? (currentConfig.sponsors[index].txId || "") : ""
+            };
+
+            if (index >= 0) {
+                currentConfig.sponsors[index] = sponsor;
+            } else {
+                currentConfig.sponsors.push(sponsor);
+            }
+
+            closeModal();
+            renderSponsorsTable();
+            saveConfig();
+        }
+
+        function deleteSponsor(id) {
+            if (confirm('Are you sure you want to reset this slot to empty?')) {
+                const index = currentConfig.sponsors.findIndex(x => x.id === id);
+                if (index !== -1) {
+                    const slotNum = currentConfig.sponsors[index].slot;
+                    currentConfig.sponsors[index] = {
+                        id: id,
+                        name: "Empty Slot",
+                        url: "",
+                        description: "",
+                        color: "#ffffff",
+                        svg: "",
+                        tier: "gold",
+                        slot: slotNum,
+                        status: "empty",
+                        expiry: ""
+                    };
+                    renderSponsorsTable();
+                    saveConfig();
+                }
+            }
+        }
+
+        document.getElementById('logout-btn').addEventListener('click', function () {
+            localStorage.removeItem('_lmn_token');
+            window.location.href = 'index.html';
+        });
+
+        // Clear errors while typing in modal
+        ['edit-name', 'edit-url', 'edit-description', 'edit-color'].forEach(id => {
+            document.getElementById(id).oninput = () => {
+                document.getElementById('sponsor-error').classList.add('hidden');
+            };
+        });
+
+        function closeModal() {
+            document.getElementById('sponsor-modal').classList.add('hidden');
+            document.getElementById('sponsor-modal').classList.remove('flex');
+            document.getElementById('sponsor-error').classList.add('hidden');
+        }
+
+        // Hook into add/edit to ensure they also hide errors
+        const originalAdd = addSponsor;
+        addSponsor = function () {
+            originalAdd();
+            document.getElementById('sponsor-error').classList.add('hidden');
+        };
+
+        const originalEdit = editSponsor;
+        editSponsor = function (id) {
+            originalEdit(id);
+            document.getElementById('sponsor-error').classList.add('hidden');
+        };
+
+        init();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina | Your AI Trading Sidekick</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --tv-bg: #050505;
+            --sur-bg: #0d0d0d;
+            --bullish: #10b981;
+            --bearish: #ef4444;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+        }
+
+        html,
+        body {
+            background-color: #050505 !important;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dancing-script {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .glass {
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-gradient {
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+        }
+
+        .glow-button {
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            display: flex;
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 2rem;
+            animation: marquee 20s linear infinite;
+        }
+
+        .widget-input {
+            background: rgba(24, 24, 24, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .widget-input:focus {
+            background: rgba(30, 30, 30, 0.6);
+            border-color: #3b82f6;
+            outline: none;
+        }
+
+        /* UI Utilities */
+        .floating-orb {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            filter: blur(60px);
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-[#050505]">
+    <!-- Fixed Background Gradient -->
+    <div class="fixed inset-0 hero-gradient -z-10 pointer-events-none"></div>
+
+    <!-- Navigation -->
+    <div class="fixed top-6 left-0 w-full z-50 flex justify-center px-6">
+        <nav class="glass px-8 py-3 rounded-full flex items-center gap-12 border border-white/10 shadow-2xl">
+            <div class="flex items-center gap-2 pr-6 border-r border-white/10">
+                <div class="w-2.5 h-2.5 rounded-full bg-blue-500"></div>
+                <span class="dancing-script text-xl text-white">Lumina</span>
+            </div>
+            <div class="flex items-center gap-8 text-sm font-bold text-gray-400">
+                <a href="#calc" class="hover:text-white transition-colors">Position Sizing</a>
+                <a href="calendar.html" class="hover:text-white transition-colors">Economic Calendar</a>
+                <a href="partners.html" class="hover:text-white transition-colors">Partner</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-6 max-w-7xl mx-auto text-center">
+        <h1 class="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-[1.1] text-white">
+            A floating trading assistant for <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">position sizing +
+                news.</span>
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+            Stop guessing your lot sizes. Stop missing critical news. Lumina sits on top of your TradingView charts,
+            handling the math so you can focus on the trade.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+            <a href="#"
+                class="w-full sm:w-auto px-8 py-4 bg-white text-black font-black rounded-xl hover:scale-105 transition-transform flex items-center justify-center gap-2">
+                <i data-lucide="download" class="w-5 h-5"></i>
+                Add to Edge / Chrome
+            </a>
+            <a href="how-it-works.html"
+                class="w-full sm:w-auto px-8 py-4 glass text-white font-bold rounded-xl hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+                See How it Works
+            </a>
+        </div>
+
+    </section>
+
+    <!-- Proof Section: Position Sizing -->
+    <!-- Position Sizing Showcase -->
+    <section id="calc" class="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <!-- Educational Content -->
+            <div class="text-left space-y-8 order-2 lg:order-1">
+                <div class="space-y-4">
+                    <h2
+                        class="text-4xl md:text-5xl font-black italic tracking-tighter text-white uppercase leading-[0.9]">
+                        Master the Math,<br>
+                        <span class="text-blue-500 text-6xl">Conquer the Market.</span>
+                    </h2>
+                    <p class="text-xl text-gray-400 leading-relaxed font-medium">
+                        Position sizing isn't just a calculation—it's the core of professional longevity.
+                        Lumina eliminates the "panic math" that leads to account-blown mistakes.
+                    </p>
+                </div>
+
+                <!-- Why Lumina Benefit Grid -->
+                <div class="grid grid-cols-1 gap-6">
+                    <!-- Total Chart Focus -->
+                    <div class="relative p-8 glass rounded-[2rem] border-white/5 bg-blue-500/[0.02] group">
+                        <div class="flex items-start gap-6">
+                            <div
+                                class="shrink-0 w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 border border-blue-500/20">
+                                <i data-lucide="zap" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-xl text-white mb-2 uppercase tracking-tight">Total Chart
+                                    Focus</h4>
+                                <p class="text-gray-400 leading-relaxed font-medium">Most traders lose focus switching
+                                    between TradingView and a calculator. Lumina lives <span
+                                        class="text-blue-400 font-bold">on your chart</span>, keeping you in the flow
+                                    state.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invisible Power -->
+                    <div class="relative p-8 glass rounded-[2rem] border-white/5 bg-emerald-500/[0.02] group">
+                        <div class="flex items-start gap-6">
+                            <div
+                                class="shrink-0 w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 border border-emerald-500/20">
+                                <i data-lucide="eye-off" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-xl text-white mb-2 uppercase tracking-tight italic">Invisible
+                                    Power (Alt + L)</h4>
+                                <p class="text-gray-400 leading-relaxed font-medium">Don't clutter your analysis. Toggle
+                                    Lumina instantly whenever you need a clean screen. <code
+                                        class="bg-emerald-500/10 px-2 py-0.5 rounded text-emerald-400 border border-emerald-500/20 text-[10px] font-black">ALT + L</code>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4 mt-6">
+                    <div class="glass p-6 rounded-2xl border-white/5 hover:border-blue-500/30">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 mb-4">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-white mb-1 uppercase tracking-tight">Preserve Capital</h3>
+                            <p class="text-xs text-gray-500 leading-relaxed">Systematically risking 1% ensures that a
+                                string of losses won't blow your account.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass p-6 rounded-2xl border-white/5 hover:border-emerald-500/30">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-4">
+                            <i data-lucide="brain"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-white mb-1 uppercase tracking-tight">Zero Emotion</h3>
+                            <p class="text-xs text-gray-500 leading-relaxed">Know your exact lot size before you click.
+                                Eliminate the panic math.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Widget Showcase -->
+            <div class="order-1 lg:order-2">
+                <div class="relative max-w-[420px] mx-auto">
+
+                    <!-- Glow Decoration -->
+                    <div class="absolute -inset-4 bg-blue-500/20 blur-3xl rounded-full opacity-50 animate-pulse"></div>
+
+                    <!-- The Widget Wrap (for Toggle Demo) -->
+                    <div id="demo-widget-container" class="transition-all duration-500 transform">
+                        <div
+                            class="relative w-[380px] h-[310px] bg-[#0C0C0C] rounded-[30px] border border-white/[0.08] flex flex-col overflow-hidden shadow-2xl select-none mx-auto">
+
+                            <!-- Header -->
+                            <div
+                                class="h-14 flex items-center justify-between px-6 shrink-0 border-b border-white/[0.02]">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]">
+                                    </div>
+                                    <h1 class="text-[22px] font-bold text-white tracking-wide dancing-script">Lumina
+                                    </h1>
+                                </div>
+                            </div>
+
+                            <!-- Body -->
+                            <div class="flex-1 px-6 pt-5 space-y-4 text-left">
+
+                                <!-- Row 1: Instrument + Risk -->
+                                <div class="flex gap-3">
+                                    <div class="flex-[6] space-y-1">
+                                        <label
+                                            class="text-[8px] font-bold text-gray-700 uppercase tracking-widest pl-0.5">Instrument</label>
+                                        <div
+                                            class="bg-[#181818] border border-white/[0.04] rounded-lg h-[36px] px-3 flex items-center gap-2.5">
+                                            <!-- Flag Icon -->
+                                            <div class="flex items-center relative h-5 w-9">
+                                                <div
+                                                    class="absolute left-0 z-10 w-5 h-5 rounded-full border border-[#121212] overflow-hidden">
+                                                    <img src="https://flagcdn.com/w40/eu.png"
+                                                        class="w-full h-full object-cover" />
+                                                </div>
+                                                <div
+                                                    class="absolute left-3.5 z-0 w-5 h-5 rounded-full border border-[#121212] overflow-hidden">
+                                                    <img src="https://flagcdn.com/w40/us.png"
+                                                        class="w-full h-full object-cover" />
+                                                </div>
+                                            </div>
+                                            <span
+                                                class="text-[12px] font-bold text-gray-200 tracking-tight">EURUSD</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex-[4] space-y-1">
+                                        <label
+                                            class="text-[8px] font-bold text-gray-700 uppercase tracking-widest text-right block pr-1">Risk
+                                            ($)</label>
+                                        <div class="relative group">
+                                            <span
+                                                class="absolute left-3 top-1/2 -translate-y-1/2 text-[12px] font-bold text-gray-600 transition-colors">$</span>
+                                            <input type="text" id="widget-risk" value="---"
+                                                class="w-full bg-[#181818] border border-white/[0.04] rounded-lg h-[36px] pl-6 pr-2 text-[12px] font-bold focus:outline-none focus:border-cyan-500/20 focus:bg-[#1C1C1C] transition-all text-gray-700" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Row 2: Lot Size + Stop Loss -->
+                                <div class="flex gap-3">
+                                    <div class="flex-[6] space-y-1">
+                                        <div class="flex items-center gap-1.5 pl-0.5">
+                                            <label
+                                                class="text-[8px] font-bold text-gray-700 uppercase tracking-widest">Lot
+                                                Size</label>
+                                            <button id="copy-btn"
+                                                class="text-gray-600 hover:text-white transition-colors">
+                                                <i data-lucide="copy" class="w-2.5 h-2.5"></i>
+                                            </button>
+                                        </div>
+                                        <div class="h-[36px] flex items-center">
+                                            <span id="widget-result"
+                                                class="text-[22px] font-black tracking-tighter leading-none text-cyan-50">
+                                                ---
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex-[4] space-y-1">
+                                        <label
+                                            class="text-[8px] font-bold text-gray-700 uppercase tracking-widest text-right block pr-1">Stop
+                                            Loss (Pips)</label>
+                                        <div
+                                            class="bg-[#181818] border border-white/[0.04] rounded-lg h-[36px] flex items-center px-3 relative group focus-within:bg-[#1C1C1C] transition-colors">
+                                            <input type="text" id="widget-sl" value="---"
+                                                class="w-full bg-transparent text-[12px] font-bold text-center focus:outline-none text-gray-700" />
+
+                                            <!-- Steppers -->
+                                            <div
+                                                class="absolute right-1.5 flex flex-col gap-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <button id="sl-up"
+                                                    class="cursor-pointer text-gray-600 hover:text-white active:scale-90 transition-transform">
+                                                    <i data-lucide="chevron-up" class="w-3 h-3"></i>
+                                                </button>
+                                                <button id="sl-down"
+                                                    class="cursor-pointer text-gray-600 hover:text-white active:scale-90 transition-transform">
+                                                    <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Row 3: Buttons -->
+                                <div class="flex gap-2 pt-2 mt-auto">
+                                    <button id="widget-calc-btn"
+                                        class="flex-1 bg-cyan-600 hover:bg-cyan-500 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] active:scale-[0.98] transition-all h-[42px] rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-cyan-900/20 group text-white">
+                                        <i data-lucide="zap" class="w-4 h-4 fill-white"></i>
+                                        <span class="font-bold text-[13px]">Calculate</span>
+                                    </button>
+
+                                    <button id="reset-btn"
+                                        class="group w-[42px] h-[42px] bg-[#181818] border border-white/[0.04] rounded-xl flex items-center justify-center text-gray-600 hover:text-cyan-400 hover:border-cyan-500/30 hover:bg-[#1C1C1C] transition-all active:scale-95"
+                                        title="Reset">
+                                        <i data-lucide="rotate-ccw"
+                                            class="w-4 h-4 transition-transform duration-500 group-hover:-rotate-180"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <!-- Footer Decoration -->
+                            <div class="mt-auto p-4 flex justify-center opacity-30">
+                                <div class="h-1 w-12 bg-gray-700 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+    </section>
+
+
+    <!-- Trust Section -->
+    <section id="trust" class="py-20 px-6 bg-white/[0.01]">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl font-black mb-16 italic tracking-tighter text-white uppercase">ZERO FEAR. LOCAL FIRST.
+            </h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="p-8 glass rounded-2xl border border-white/5 hover:border-white/20 transition-colors">
+                    <i data-lucide="user-minus" class="w-8 h-8 text-gray-500 mb-6"></i>
+                    <h3 class="font-bold mb-2 text-white">No Login</h3>
+                    <p class="text-sm text-gray-400">We don't want your email or phone. Download and use.</p>
+                </div>
+                <div class="p-8 glass rounded-2xl border border-white/5 hover:border-white/20 transition-colors">
+                    <i data-lucide="shield-off" class="w-8 h-8 text-gray-500 mb-6"></i>
+                    <h3 class="font-bold mb-2 text-white">No Broker Sync</h3>
+                    <p class="text-sm text-gray-400">Your trades are yours. We NEVER connect to your broker.</p>
+                </div>
+                <div class="p-8 glass rounded-2xl border border-white/5 hover:border-white/20 transition-colors">
+                    <i data-lucide="ban" class="w-8 h-8 text-gray-500 mb-6"></i>
+                    <h3 class="font-bold mb-2 text-white">No Execution</h3>
+                    <p class="text-sm text-gray-400">Lumina is a calculator, not a terminal. No accidental trades.</p>
+                </div>
+                <div class="p-8 glass rounded-2xl border border-white/5 hover:border-white/20 transition-colors">
+                    <i data-lucide="cpu" class="w-8 h-8 text-gray-500 mb-6"></i>
+                    <h3 class="font-bold mb-2 text-white">Local Logic</h3>
+                    <p class="text-sm text-gray-400">All math happens on your machine. Fast and private.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Markets Section -->
+    <section class="py-20 px-6 max-w-7xl mx-auto border-t border-white/5">
+        <h3 class="text-sm font-bold text-gray-500 uppercase tracking-[0.4em] text-center mb-12">Universal Market
+            Support</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+            <div class="space-y-4">
+                <div class="flex justify-center -space-x-4 mb-6">
+                    <img src="https://flagcdn.com/w80/us.png"
+                        class="w-12 h-12 rounded-full border-2 border-[#050505] object-cover">
+                    <img src="https://flagcdn.com/w80/eu.png"
+                        class="w-12 h-12 rounded-full border-2 border-[#050505] object-cover">
+                    <img src="https://flagcdn.com/w80/gb.png"
+                        class="w-12 h-12 rounded-full border-2 border-[#050505] object-cover">
+                </div>
+                <h4 class="text-xl font-bold text-white">Forex</h4>
+                <p class="text-sm text-gray-500">Majors, Minors, and Metals with precise pip calculation for any account
+                    currency.</p>
+            </div>
+            <div class="space-y-4">
+                <div class="flex justify-center -space-x-4 mb-6">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center font-bold border-2 border-[#050505] text-white">
+                        ES</div>
+                    <div
+                        class="w-12 h-12 rounded-lg bg-teal-500 flex items-center justify-center font-bold border-2 border-[#050505] text-white">
+                        NQ</div>
+                    <div
+                        class="w-12 h-12 rounded-lg bg-orange-500 flex items-center justify-center font-bold border-2 border-[#050505] text-white">
+                        GC</div>
+                </div>
+                <h4 class="text-xl font-bold text-white">Futures</h4>
+                <p class="text-sm text-gray-500">Indices and Commodities with tick-aware sizing for both Full and Micro
+                    contracts.</p>
+            </div>
+            <div class="space-y-4">
+                <div class="flex justify-center -space-x-4 mb-6">
+                    <div
+                        class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center border-2 border-[#050505] shadow-lg shadow-orange-500/20 text-white">
+                        <i data-lucide="bitcoin" class="w-6 h-6"></i>
+                    </div>
+                    <div
+                        class="w-12 h-12 rounded-full bg-indigo-500 flex items-center justify-center border-2 border-[#050505] shadow-lg shadow-indigo-500/20 text-white">
+                        <i data-lucide="gem" class="w-6 h-6"></i>
+                    </div>
+                    <div
+                        class="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center border-2 border-[#050505] shadow-lg shadow-purple-500/20 text-white">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                </div>
+                <h4 class="text-xl font-bold text-white">Crypto</h4>
+                <p class="text-sm text-gray-500">Spot and Perpetual support for all major exchanges. Simple unit-based
+                    risk management.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Action Section -->
+    <section class="py-32 px-6 text-center">
+        <div class="max-w-4xl mx-auto glass p-12 rounded-[2rem] border-2 border-blue-600/30 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10">
+                <i data-lucide="zap" class="w-64 h-64 -mr-20 -mt-20 text-blue-500"></i>
+            </div>
+            <h2 class="text-4xl md:text-6xl font-black mb-8 italic tracking-tighter text-white uppercase">READY TO TRADE
+                SMARTER?</h2>
+            <a href="#"
+                class="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-black text-xl rounded-2xl hover:scale-105 transition-transform glow-button">
+                <i data-lucide="download"></i>
+                Add to Edge / Chrome
+            </a>
+            <p class="mt-8 text-gray-500 font-bold uppercase tracking-widest text-xs">Free forever. Updated weekly.</p>
+        </div>
+    </section>
+
+    <!-- Featured Sponsors Section -->
+    <section class="py-24 border-t border-white/5 bg-gradient-to-b from-transparent to-blue-500/[0.02]">
+        <div class="max-w-7xl mx-auto px-6">
+            <h3 class="text-[10px] font-black text-gray-600 uppercase tracking-[0.4em] text-center mb-16">Official
+                Ecosystem Partners</h3>
+
+            <div id="featured-sponsors" class="flex flex-wrap justify-center gap-8 items-center">
+                <!-- Populated via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <footer id="support" class="bg-black py-20 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 text-left">
+            <div class="col-span-2">
+                <div class="flex items-center gap-2 mb-6">
+                    <a href="secret.html"
+                        class="text-2xl font-bold tracking-tighter text-white uppercase italic hover:text-blue-400 transition-colors">LUMINA</a>
+                </div>
+                <p class="text-gray-500 max-w-sm mb-8 leading-relaxed font-medium">
+                    Designed for practitioners by practitioners. Lumina is community driven and privacy focused.
+                </p>
+                <div class="flex gap-6 text-gray-400">
+                    <a href="#" class="hover:text-white transition-colors">Discord</a>
+                    <a href="#" class="hover:text-white transition-colors">Twitter</a>
+                    <a href="#" class="hover:text-white transition-colors">GitHub</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-6 uppercase tracking-[0.3em] text-[10px]">Legal</h4>
+                <ul class="space-y-4 text-gray-500 text-sm font-bold uppercase tracking-tight">
+                    <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    <li><a href="disclaimer.html" class="hover:text-white transition-colors">Disclaimer</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-6 uppercase tracking-[0.3em] text-[10px]">Contact</h4>
+                <ul class="space-y-4 text-gray-500 text-sm font-bold uppercase tracking-tight">
+                    <li><a href="mailto:luminarisk.app@gmail.com"
+                            class="hover:text-white transition-colors">luminarisk.app@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="max-w-7xl mx-auto mt-20 text-center text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+            © 2026 Lumina Trade. All Rights Reserved. Not affiliated with TradingView. Use at your own risk.
+        </div>
+    </footer>
+
+    <!-- Browser Install Modal -->
+    <div id="install-modal"
+        class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 transition-all duration-300 opacity-0">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="closeInstallModal()"></div>
+        <div class="relative glass max-w-md w-full rounded-[2.5rem] p-8 overflow-hidden shadow-2xl border-white/10 scale-95 transition-all duration-300 transform opacity-0 translate-y-4"
+            id="install-modal-content">
+
+            <div class="text-center space-y-6">
+                <div
+                    class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-emerald-500 mx-auto flex items-center justify-center shadow-lg shadow-blue-500/20 text-white">
+                    <i data-lucide="download-cloud" class="w-8 h-8"></i>
+                </div>
+
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-black text-white uppercase italic tracking-tighter">Choose your platform
+                    </h3>
+                    <p class="text-sm text-gray-500 font-bold uppercase tracking-widest">Get Lumina for your preferred
+                        browser</p>
+                </div>
+
+                <div class="space-y-3 pt-4">
+                    <!-- Edge Button -->
+                    <a href="https://microsoftedge.microsoft.com/addons/detail/lumina-trading-sidekick/..."
+                        target="_blank" id="edge-btn"
+                        class="flex items-center gap-4 w-full p-3 rounded-xl bg-white border-2 border-transparent hover:border-blue-500 transition-all group relative overflow-hidden shadow-lg hover:scale-[1.02]">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-[#0C1524] flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M7.462 0H0v7.19h7.462zM16 0H8.538v7.19H16zM7.462 8.211H0V16h7.462zm8.538 0H8.538V16H16z" />
+                            </svg>
+                        </div>
+                        <div class="text-left">
+                            <span class="block text-black font-black uppercase tracking-wider text-sm">Add to
+                                Edge</span>
+                            <span
+                                class="block text-gray-500 text-[10px] font-bold uppercase tracking-widest group-hover:text-blue-600 transition-colors">Recommended</span>
+                        </div>
+                        <i data-lucide="arrow-right"
+                            class="w-5 h-5 text-gray-400 ml-auto group-hover:text-black group-hover:translate-x-1 transition-all"></i>
+                    </a>
+
+                    <!-- Chrome Button -->
+                    <a href="https://chrome.google.com/webstore/detail/..." target="_blank" id="chrome-btn"
+                        class="flex items-center gap-4 w-full p-3 rounded-xl bg-white border-2 border-transparent hover:border-emerald-500 transition-all group relative overflow-hidden shadow-lg hover:scale-[1.02]">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-[#0C1524] flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <line x1="21.17" y1="8" x2="12" y2="8"></line>
+                                <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+                                <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+                            </svg>
+                        </div>
+                        <div class="text-left">
+                            <span class="block text-black font-black uppercase tracking-wider text-sm">Add to
+                                Chrome</span>
+                            <span
+                                class="block text-gray-500 text-[10px] font-bold uppercase tracking-widest group-hover:text-emerald-600 transition-colors">Web
+                                Store</span>
+                        </div>
+                        <i data-lucide="arrow-right"
+                            class="w-5 h-5 text-gray-400 ml-auto group-hover:text-black group-hover:translate-x-1 transition-all"></i>
+                    </a>
+                </div>
+
+
+                <button onclick="closeInstallModal()"
+                    class="text-xs font-bold text-gray-600 uppercase tracking-widest hover:text-white transition-colors pt-4">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Install Modal Logic
+        const installModal = document.getElementById('install-modal');
+        const installModalContent = document.getElementById('install-modal-content');
+
+        function openInstallModal() {
+            installModal.classList.remove('hidden');
+            setTimeout(() => {
+                installModal.classList.remove('opacity-0');
+                installModalContent.classList.remove('opacity-0', 'translate-y-4', 'scale-95');
+                installModalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeInstallModal() {
+            installModal.classList.add('opacity-0');
+            installModalContent.classList.add('opacity-0', 'translate-y-4', 'scale-95');
+            installModalContent.classList.remove('scale-100');
+
+            setTimeout(() => {
+                installModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Attach to all install buttons
+        document.querySelectorAll('a').forEach(anchor => {
+            const text = anchor.textContent.toLowerCase();
+            if (text.includes('install') || text.includes('download') || text.includes('add to')) {
+                anchor.onclick = (e) => {
+                    e.preventDefault();
+                    openInstallModal();
+                };
+            }
+        });
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // High-Fidelity Widget Logic
+        const widgetRisk = document.getElementById('widget-risk');
+        const widgetSL = document.getElementById('widget-sl');
+        const widgetResult = document.getElementById('widget-result');
+        const widgetCalcBtn = document.getElementById('widget-calc-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const copyBtn = document.getElementById('copy-btn');
+
+        const slUp = document.getElementById('sl-up');
+        const slDown = document.getElementById('sl-down');
+
+        // EURUSD Constants
+        const SYMBOL = { lot_size: 100000, pip_size: 0.0001 };
+
+        // Input Placeholder Logic ("---")
+        const setupPlaceholder = (el) => {
+            el.addEventListener('focus', () => {
+                if (el.value === '---') {
+                    el.value = '';
+                    el.classList.remove('text-gray-700');
+                    el.classList.add('text-white');
+                }
+            });
+            el.addEventListener('blur', () => {
+                if (el.value === '') {
+                    el.value = '---';
+                    el.classList.add('text-gray-700');
+                    el.classList.remove('text-white');
+                }
+            });
+            el.addEventListener('input', (e) => {
+                const val = e.target.value;
+                if (val !== '' && !/^\d*\.?\d*$/.test(val)) {
+                    e.target.value = val.slice(0, -1);
+                }
+            });
+        };
+
+        setupPlaceholder(widgetRisk);
+        setupPlaceholder(widgetSL);
+
+        function calculateLots() {
+            const riskVal = parseFloat(widgetRisk.value);
+            const slVal = parseFloat(widgetSL.value);
+
+            if (!isNaN(riskVal) && !isNaN(slVal) && slVal > 0) {
+                const pipValue = SYMBOL.lot_size * SYMBOL.pip_size; // 10
+                const lots = riskVal / (slVal * pipValue);
+                widgetResult.textContent = lots.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                widgetResult.classList.add('animate-pulse');
+                setTimeout(() => widgetResult.classList.remove('animate-pulse'), 500);
+            } else {
+                widgetResult.textContent = '---';
+            }
+        }
+
+        widgetCalcBtn.addEventListener('click', calculateLots);
+
+        // Reset Logic
+        resetBtn.addEventListener('click', () => {
+            widgetRisk.value = '---';
+            widgetSL.value = '---';
+            widgetResult.textContent = '---';
+            widgetRisk.classList.add('text-gray-700');
+            widgetSL.classList.add('text-gray-700');
+        });
+
+        // Copy Logic
+        copyBtn.addEventListener('click', () => {
+            const res = widgetResult.textContent;
+            if (res !== '---') {
+                navigator.clipboard.writeText(res);
+                const originalIcon = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i data-lucide="check" class="w-2.5 h-2.5 text-cyan-400"></i>';
+                lucide.createIcons();
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalIcon;
+                    lucide.createIcons();
+                }, 1000);
+            }
+        });
+
+        // Steppers
+        slUp.addEventListener('click', () => {
+            let val = parseFloat(widgetSL.value === '---' ? 0 : widgetSL.value);
+            widgetSL.value = (val + 1).toFixed(1);
+            widgetSL.classList.remove('text-gray-700');
+            widgetSL.classList.add('text-white');
+            calculateLots();
+        });
+
+        slDown.addEventListener('click', () => {
+            let val = parseFloat(widgetSL.value === '---' ? 0 : widgetSL.value);
+            widgetSL.value = Math.max(0, val - 1).toFixed(1);
+            widgetSL.classList.remove('text-gray-700');
+            widgetSL.classList.add('text-white');
+            calculateLots();
+        });
+
+        // Alt + L Toggle Simulation
+        const widgetContainer = document.getElementById('demo-widget-container');
+        window.addEventListener('keydown', (e) => {
+            if (e.altKey && (e.key === 'l' || e.key === 'L')) {
+                e.preventDefault();
+                const isHidden = widgetContainer.style.opacity === '0';
+                widgetContainer.style.opacity = isHidden ? '1' : '0';
+                widgetContainer.style.transform = isHidden ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(20px)';
+                widgetContainer.style.pointerEvents = isHidden ? 'auto' : 'none';
+            }
+        });
+
+        async function loadConfig() {
+            try {
+                // Cache busting: Add timestamp and no-store header
+                const res = await fetch(`/api/config?t=${Date.now()}`, { cache: 'no-store' });
+                const config = await res.json();
+                if (config) {
+                    applyConfig(config);
+                }
+            } catch (e) {
+                console.error('Failed to load config', e);
+            }
+        }
+
+        function applyConfig(config) {
+            // Update Browser Links
+            const chromeBtn = document.getElementById('chrome-btn');
+            const edgeBtn = document.getElementById('edge-btn');
+
+            if (chromeBtn) {
+                if (config.toggles.chrome_coming_soon) {
+                    chromeBtn.href = "#chrome-coming-soon";
+                    chromeBtn.onclick = (e) => { e.preventDefault(); };
+
+                    // Visual Disabled State - NO GRAYSCALE, NO BLUR on parent
+                    chromeBtn.classList.add('cursor-not-allowed', 'pointer-events-none');
+                    chromeBtn.classList.remove('hover:scale-[1.02]', 'hover:border-emerald-500', 'group', 'shadow-lg');
+
+                    // Dim the text areas
+                    const textDiv = chromeBtn.querySelector('.text-left');
+                    const arrowIcon = chromeBtn.querySelector('[data-lucide="arrow-right"]');
+                    const iconContainer = chromeBtn.querySelector('.w-10'); // The black icon box
+
+                    if (textDiv) textDiv.classList.add('opacity-10');
+                    if (arrowIcon) arrowIcon.classList.add('opacity-10');
+                    if (iconContainer) {
+                        iconContainer.classList.remove('opacity-40', 'grayscale');
+                        iconContainer.classList.add('opacity-100', 'relative', 'z-30'); // Boost Z-index
+                    }
+
+                    // Add premium overlay but AVOID BACKDROP BLUR on icons
+                    if (!chromeBtn.querySelector('.overlay-msg')) {
+                        const div = document.createElement('div');
+                        // Use bg-black/40 instead of backdrop-blur to keep icons sharp
+                        div.className = 'overlay-msg absolute inset-0 flex items-center justify-center rounded-xl z-20 bg-black/40';
+                        div.innerHTML = `
+                            <div class="relative overflow-hidden bg-white border border-white/20 px-4 py-2 rounded-lg shadow-2xl shadow-black/60">
+                                <span class="text-black font-black text-[10px] uppercase tracking-[0.2em] relative z-10">Coming Soon</span>
+                                <div class="absolute inset-x-[-100%] inset-y-0 bg-gradient-to-r from-transparent via-white/80 to-transparent skew-x-[-20deg] animate-shimmer"></div>
+                            </div>
+                        `;
+                        chromeBtn.appendChild(div);
+                    }
+                } else {
+                    chromeBtn.href = config.links.chrome || "#";
+                    chromeBtn.onclick = null;
+                    chromeBtn.classList.remove('cursor-not-allowed', 'pointer-events-none');
+                    chromeBtn.classList.add('hover:scale-[1.02]', 'hover:border-emerald-500', 'group', 'shadow-lg');
+
+                    const textDiv = chromeBtn.querySelector('.text-left');
+                    const arrowIcon = chromeBtn.querySelector('[data-lucide="arrow-right"]');
+                    const iconContainer = chromeBtn.querySelector('.w-10');
+
+                    if (textDiv) textDiv.classList.remove('opacity-10');
+                    if (arrowIcon) arrowIcon.classList.remove('opacity-10');
+                    if (iconContainer) iconContainer.classList.remove('z-30');
+
+                    const overlay = chromeBtn.querySelector('.overlay-msg');
+                    if (overlay) overlay.remove();
+                }
+            }
+
+            if (edgeBtn) {
+                if (config.toggles.edge_coming_soon) {
+                    edgeBtn.href = "#edge-coming-soon";
+                    edgeBtn.onclick = (e) => { e.preventDefault(); };
+
+                    edgeBtn.classList.add('cursor-not-allowed', 'pointer-events-none');
+                    edgeBtn.classList.remove('hover:scale-[1.02]', 'hover:border-blue-500', 'group', 'shadow-lg');
+
+                    const textDiv = edgeBtn.querySelector('.text-left');
+                    const arrowIcon = edgeBtn.querySelector('[data-lucide="arrow-right"]');
+                    const iconContainer = edgeBtn.querySelector('.w-10');
+
+                    if (textDiv) textDiv.classList.add('opacity-10');
+                    if (arrowIcon) arrowIcon.classList.add('opacity-10');
+                    if (iconContainer) {
+                        iconContainer.classList.remove('opacity-40', 'grayscale');
+                        iconContainer.classList.add('opacity-100', 'relative', 'z-30');
+                    }
+
+                    if (!edgeBtn.querySelector('.overlay-msg')) {
+                        const div = document.createElement('div');
+                        div.className = 'overlay-msg absolute inset-0 flex items-center justify-center rounded-xl z-20 bg-black/40';
+                        div.innerHTML = `
+                            <div class="relative overflow-hidden bg-white border border-white/20 px-4 py-2 rounded-lg shadow-2xl shadow-black/60">
+                                <span class="text-black font-black text-[10px] uppercase tracking-[0.2em] relative z-10">Coming Soon</span>
+                                <div class="absolute inset-x-[-100%] inset-y-0 bg-gradient-to-r from-transparent via-white/80 to-transparent skew-x-[-20deg] animate-shimmer"></div>
+                            </div>
+                        `;
+                        edgeBtn.appendChild(div);
+                    }
+                } else {
+                    edgeBtn.href = config.links.edge || "#";
+                    edgeBtn.onclick = null;
+                    edgeBtn.classList.remove('cursor-not-allowed', 'pointer-events-none');
+                    edgeBtn.classList.add('hover:scale-[1.02]', 'hover:border-blue-500', 'group', 'shadow-lg');
+
+                    const textDiv = edgeBtn.querySelector('.text-left');
+                    const arrowIcon = edgeBtn.querySelector('[data-lucide="arrow-right"]');
+                    const iconContainer = edgeBtn.querySelector('.w-10');
+
+                    if (textDiv) textDiv.classList.remove('opacity-10');
+                    if (arrowIcon) arrowIcon.classList.remove('opacity-10');
+                    if (iconContainer) iconContainer.classList.remove('z-30');
+
+                    const overlay = edgeBtn.querySelector('.overlay-msg');
+                    if (overlay) overlay.remove();
+                }
+            }
+
+            // Sync Sponsors
+            renderFeaturedSponsors(config.sponsors);
+
+            // Update Social Links in Footer
+            const footer = document.querySelector('footer');
+            if (footer) {
+                const links = footer.querySelectorAll('a');
+                // Heuristic: finding links by text content or structure might be better, 
+                // but relying on the order in the footer is risky if footer changes.
+                // Let's use more specific selectors if possible or iterate.
+                const discordLink = Array.from(links).find(a => a.innerText.toLowerCase().includes('discord'));
+                const twitterLink = Array.from(links).find(a => a.innerText.toLowerCase().includes('twitter'));
+                const githubLink = Array.from(links).find(a => a.innerText.toLowerCase().includes('github'));
+
+                if (discordLink && config.links.discord) discordLink.href = config.links.discord;
+                if (twitterLink && config.links.twitter) twitterLink.href = config.links.twitter;
+                if (githubLink && config.links.github) githubLink.href = config.links.github;
+            }
+        }
+
+        function renderFeaturedSponsors(sponsors, toggles) {
+            const container = document.getElementById('featured-sponsors');
+            if (!container || !sponsors) return;
+
+            const activeSponsors = sponsors.filter(s => s.status === 'active');
+            container.innerHTML = '';
+
+            if (activeSponsors.length === 0 || (toggles && toggles.sponsors_blur)) {
+                container.innerHTML = '<p class="text-gray-600 font-bold uppercase tracking-widest text-xs opacity-50">Partnerships Opening Soon</p>';
+                return;
+            }
+
+            activeSponsors.forEach(sponsor => {
+                const brandColor = sponsor.color || '#3b82f6';
+                const pill = document.createElement('div');
+                pill.className = 'px-8 py-5 rounded-[2rem] flex items-center gap-5 transition-all hover:-translate-y-1 cursor-pointer';
+
+                // Dynamic Styles - Pure white background as requested
+                const shadowLight = hexToRgba(brandColor, 0.15);
+
+                pill.style.backgroundColor = '#ffffff';
+                pill.style.border = `1px solid ${hexToRgba(brandColor, 0.1)}`;
+                pill.style.boxShadow = `0 20px 50px ${shadowLight}`;
+                pill.onclick = () => { if (sponsor.url) window.open(sponsor.url, '_blank') };
+
+                const isDataUrl = sponsor.svg && sponsor.svg.startsWith('data:');
+                const iconContent = isDataUrl
+                    ? `<img src="${sponsor.svg}" class="w-full h-full object-contain">`
+                    : (sponsor.svg ? sponsor.svg : `<span class="text-white font-black text-xl">${sponsor.name.substring(0, 2).toUpperCase()}</span>`);
+
+                pill.innerHTML = `
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg overflow-hidden shrink-0" 
+                         style="background-color: ${brandColor};">
+                        ${iconContent}
+                    </div>
+                    <span class="text-2xl font-black tracking-tighter uppercase" style="color: ${brandColor}; opacity: 0.9;">${sponsor.name}</span>
+                `;
+                container.appendChild(pill);
+            });
+        }
+
+        function hexToRgba(hex, alpha) {
+            let r = 255, g = 255, b = 255;
+            if (hex && hex.startsWith('#')) {
+                r = parseInt(hex.slice(1, 3), 16) || 255;
+                g = parseInt(hex.slice(3, 5), 16) || 255;
+                b = parseInt(hex.slice(5, 7), 16) || 255;
+            }
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        loadConfig();
+        // Poll for updates every 5 minutes
+        setInterval(loadConfig, 300000);
+    </script>
+</body>
+
+</html>

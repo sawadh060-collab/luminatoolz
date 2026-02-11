@@ -1,0 +1,103 @@
+{
+  "links": {
+    "chrome": "https://supabase.com/dashboard/project/mmlgebgvexyijnsswhrc/editor/17491?schema=public",
+    "edge": "https://supabase.com/dashboard/project/mmlgebgvexyijnsswhrc/editor/17491?schema=public",
+    "discord": "https://discord.gg/lumina",
+    "twitter": "https://x.com/lumina",
+    "github": "https://github.com/lumina",
+    "paypal": "https://www.paypal.com/ncp/payment/YYND3WPJ8JW"
+  },
+  "toggles": {
+    "chrome_coming_soon": false,
+    "edge_coming_soon": false,
+    "sponsors_blur": false,
+    "sponsors_coming_soon_msg": false
+  },
+  "user_base": 100,
+  "price_per_100_users": 60,
+  "sponsors": [
+    {
+      "id": 1,
+      "name": "Apex Trading",
+      "url": "https://apextraderfunding.com/",
+      "description": "Premium capital for skilled traders. Scale your strategy with industry-leading funding.",
+      "color": "#000000",
+      "svg": "data:image/png;base64,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",
+      "code": "LUMINA",
+      "offer": "80% OFF",
+      "tier": "gold",
+      "slot": 1,
+      "status": "active",
+      "expiry": "",
+      "txId": "mock_tx_001"
+    },
+    {
+      "id": 2,
+      "name": "Lumina Premium",
+      "email": "",
+      "url": "https://lumina.com/premium",
+      "description": "Unlock advanced real-time insights and institutional-grade tools to master the markets.",
+      "color": "#ffcc00",
+      "svg": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<!-- Generator: Adobe Illustrator 25.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->\r\n<svg version=\"1.0\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\r\n\t viewBox=\"0 0 828 542\" style=\"enable-background:new 0 0 828 542;\" xml:space=\"preserve\">\r\n<style type=\"text/css\">\r\n\t.st0{fill:#060606;}\r\n\t.st1{fill:#FF883D;}\r\n\t.st2{fill:none;}\r\n</style>\r\n<path class=\"st0\" d=\"M527.7,332.6c-10.9,0-18.9-2.1-24.2-6.3c-4.5-3.4-7-8.7-7-14.4h21.7c1,4.2,2.8,6.6,9.8,6.6\r\n\tc7.7,0,10.9-4.2,10.9-13.7v-8.4h-0.4c-2.7,6.9-9.7,11.2-17.2,10.5c-17.9,0-27-10.2-27-30.1c-0.4-8.5,2.5-16.7,8.1-23.1\r\n\tc5-5.2,12-8.1,19.3-8c7-0.7,13.8,2.9,17.1,9.1h0.4v-7.7h21.4v55.7c0,10.2-2.5,17.5-7.7,22.1C547.3,330.1,539.2,332.6,527.7,332.6z\r\n\t M528.4,260.8c-7,0-11.2,6-11.2,16.1c0,10.5,3.8,16.1,10.8,16.1c6,0,10.8-4.9,10.8-10.9l0,0v-8C538.8,265.7,535,260.8,528.4,260.8\r\n\tL528.4,260.8z M323.9,311.5c-7.7,0.7-15.3-1.3-21.7-5.6c-4.2-3.6-6.7-8.8-7-14.4h20c0.4,4.2,3.2,6.3,8.4,6.3c4.9,0,8-1.8,8-5.2\r\n\tc0-2.8-1.8-4.2-6.3-4.9l-10.2-1.4c-12.2-1.4-18.9-8.4-18.9-19.3c-0.1-5.6,2.2-10.9,6.3-14.7c12.1-8.4,28.1-8.8,40.6-1\r\n\tc4.2,3.5,6.6,8.6,6.6,14h-19.7c-0.1-3.6-3.1-6.4-6.6-6.3h-0.4c-5.6,0-6.7,2.5-6.7,4.9s1,4.2,6,4.9l10.9,1.4c4.8,0.2,9.4,2.1,13,5.2\r\n\tc3.5,3.4,5.3,8.2,4.9,13C352,302.8,341.1,311.6,323.9,311.5L323.9,311.5z M260.9,311.2c-20.3,0-31.9-11.9-31.9-33.3\r\n\tc-0.3-8.6,2.7-17,8.4-23.5c6.2-6.1,14.8-9.3,23.5-8.8c10.9,0,19.3,3.1,24.5,9.1c5.3,6.8,8,15.2,7.7,23.8v4.9h-41.7\r\n\tc0.7,9.1,3.5,13.3,10.2,13.3c4,0.7,7.9-1.9,8.8-6h22.1C291,303.8,280.1,311.2,260.9,311.2L260.9,311.2z M260.9,259\r\n\tc-6,0-8.8,4.2-9.5,12.6h18.9v-0.7C269.6,262.9,266.5,259,260.9,259L260.9,259z M662.5,310.9c-6.8,0.4-13.4-2.2-18.2-7\r\n\tc-4.6-5.3-7-12.2-6.7-19.3c-0.4-6.9,2-13.7,6.7-18.9c4.9-4.7,11.4-7.2,18.2-7c15.4,0,24.9,9.8,24.9,25.9S677.5,310.9,662.5,310.9z\r\n\t M662.5,268.9c-8.1,0-9.8,8.8-9.8,16.1c0,10.9,3.5,16.1,9.8,16.1s9.8-5.6,9.8-16.1S668.8,268.9,662.5,268.9z M612.4,310.9\r\n\tc-6.8,0.4-13.4-2.2-18.2-7c-4.4-5.3-6.7-12-6.3-18.9c0-16.1,9.5-25.9,24.9-25.9c14,0,22.4,7,22.8,18.9h-14.3\r\n\tc-0.3-4.2-2.1-9.1-8.4-9.1c-8.8,0-9.8,10.1-9.8,16.1c0,10.9,3.2,16.1,9.8,16.1c4.8,0,8.7-3.8,8.8-8.6c0-0.1,0-0.1,0-0.2l0,0v-1h14\r\n\tc0,5.7-2.4,11-6.7,14.8C624,309.3,618.3,311,612.4,310.9z M377.1,310.5c-5.4,0.5-10.8-1.1-15.1-4.5c-4.2-4.4-6.4-10.4-6-16.5V230\r\n\th21.8v17.2h13v15.4h-12.6v22.8c0,6.6,2.1,9.1,8.1,9.1c1.4,0.1,2.8-0.1,4.2-0.4v15.7C385.9,310.1,381.7,310.5,377.1,310.5z\r\n\t M738.8,309.5h-14.7v-29.1c0.3-2.8-0.2-5.5-1.4-8c-1.4-2.1-3.8-3.2-6.3-2.8c-6,0-9.5,4.2-9.5,11.2v28.7h-14.7v-49.4h14v8.1l0,0\r\n\tc2.9-5.8,8.9-9.4,15.4-9.1c8.4,0,13.3,3.5,15.4,10.2h0.3c2.8-6.4,9.2-10.4,16.1-10.2c11.2,0,16.5,6,16.5,18.2v32.2h-14.7v-29\r\n\tc0.3-2.8-0.2-5.5-1.4-8c-1.4-2.1-3.8-3.2-6.3-2.8c-6,0-9.5,4.2-9.5,11.2L738.8,309.5L738.8,309.5z M448.2,309.5h-22.4v-62.3h21.7\r\n\tv10.1h0.4c3.9-7.4,11.9-11.9,20.3-11.2c8,0,13.7,2.1,17.2,6.3c3.6,5.4,5.2,11.8,4.5,18.2v38.9h-22.4v-35.4c0.3-3.1-0.3-6.3-1.8-9.1\r\n\tc-1.6-2.2-4.3-3.4-7-3.1c-6.6,0-10.1,4.2-10.1,12.6L448.2,309.5L448.2,309.5z M123.9,309.5h-22.4v-62.3h21.7v10.1h0.3\r\n\tc3.9-7.4,11.9-11.9,20.3-11.2c8,0,13.7,2.1,17.2,6.3c3.6,5.4,5.2,11.8,4.6,18.2v38.9h-22.4v-35.4c0.3-3.1-0.3-6.3-1.8-9.1\r\n\tc-1.6-2.2-4.3-3.4-7-3.1c-6.7,0-10.2,4.2-10.2,12.6L123.9,309.5L123.9,309.5z M583.4,309.5H568v-14.7h15.4L583.4,309.5L583.4,309.5z\r\n\t M418.4,309.5H396v-62.3h22.4L418.4,309.5z M209.7,309.5h-23.1l-22.1-62.3H187l8,27c2.1,7.7,3.9,15.8,3.9,16.1h0.4\r\n\tc1.1-5.3,2.1-10.5,3.5-15.8l8.1-27h21.7L209.7,309.5L209.7,309.5z M93.1,309.5H70v-88.2h23.1L93.1,309.5L93.1,309.5z\"/>\r\n<path class=\"st1\" d=\"M395.3,240.5l23.1-4.2v-22.8l-23.1,4.2V240.5z\"/>\r\n<rect x=\"48\" y=\"195\" class=\"st2\" width=\"732\" height=\"152\"/>\r\n</svg>\r\n",
+      "code": "EARLYBIRD",
+      "offer": "50% OFF FOREVER",
+      "tier": "gold",
+      "slot": 2,
+      "status": "active",
+      "expiry": "",
+      "txId": "mock_tx_002"
+    },
+    {
+      "id": 3,
+      "name": "Forex Factory",
+      "email": "",
+      "url": "https://www.forexfactory.com/",
+      "description": "The world's most sophisticated forex information source. Join the professional community.",
+      "color": "#555555",
+      "svg": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\r\n<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->\r\n<svg width=\"800px\" height=\"800px\" viewBox=\"-3.5 0 48 48\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\r\n    \r\n    <title>Apple-color</title>\r\n    <desc>Created with Sketch.</desc>\r\n    <defs>\r\n\r\n</defs>\r\n    <g id=\"Icons\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n        <g id=\"Color-\" transform=\"translate(-204.000000, -560.000000)\" fill=\"#0B0B0A\">\r\n            <path d=\"M231.174735,567.792499 C232.740177,565.771699 233.926883,562.915484 233.497649,560 C230.939077,560.177808 227.948466,561.814769 226.203475,563.948463 C224.612784,565.88177 223.305444,568.757742 223.816036,571.549042 C226.613071,571.636535 229.499881,569.960061 231.174735,567.792499 L231.174735,567.792499 Z M245,595.217241 C243.880625,597.712195 243.341978,598.827022 241.899976,601.03692 C239.888467,604.121745 237.052156,607.962958 233.53412,607.991182 C230.411652,608.02505 229.606488,605.94498 225.367451,605.970382 C221.128414,605.99296 220.244696,608.030695 217.116618,607.999649 C213.601387,607.968603 210.913765,604.502761 208.902256,601.417937 C203.27452,592.79849 202.68257,582.680377 206.152914,577.298162 C208.621711,573.476705 212.515678,571.241407 216.173986,571.241407 C219.89682,571.241407 222.239372,573.296075 225.322563,573.296075 C228.313175,573.296075 230.133913,571.235762 234.440281,571.235762 C237.700215,571.235762 241.153726,573.022307 243.611302,576.10431 C235.554045,580.546683 236.85858,592.121127 245,595.217241 L245,595.217241 Z\" id=\"Apple\">\r\n\r\n</path>\r\n        </g>\r\n    </g>\r\n</svg>",
+      "code": "MARKETS",
+      "offer": "Stay Ahead",
+      "tier": "gold",
+      "slot": 3,
+      "status": "active",
+      "expiry": "",
+      "txId": "mock_tx_003"
+    },
+    {
+      "id": 4,
+      "name": "Empty Slot",
+      "url": "",
+      "description": "",
+      "color": "#ffffff",
+      "svg": "",
+      "tier": "gold",
+      "slot": 4,
+      "status": "empty",
+      "expiry": ""
+    },
+    {
+      "id": 5,
+      "name": "Empty Slot",
+      "url": "",
+      "description": "",
+      "color": "#ffffff",
+      "svg": "",
+      "tier": "gold",
+      "slot": 5,
+      "status": "empty",
+      "expiry": ""
+    },
+    {
+      "id": 6,
+      "name": "Empty Slot",
+      "url": "",
+      "description": "",
+      "color": "#ffffff",
+      "svg": "",
+      "tier": "gold",
+      "slot": 6,
+      "status": "empty",
+      "expiry": ""
+    }
+  ]
+}
